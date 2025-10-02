@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 public interface PagoRepository extends JpaRepository<Pago, Long> {
 
@@ -52,6 +51,5 @@ public interface PagoRepository extends JpaRepository<Pago, Long> {
     List<Object[]> countAndSumByMetodoPagoAndFechaPagoAfter(
             @Param("fechaInicio") LocalDateTime fechaInicio
     );
-
 
 }
