@@ -15,5 +15,5 @@ public interface TipoMembresiaRepository extends JpaRepository<TipoMembresia, Lo
     @Query("SELECT t FROM TipoMembresia t WHERE t.activo = true ORDER BY t.precio ASC")
     List<TipoMembresia> findActivosOrderByPrecio();
 
-    boolean existsByNombre(String nombre)
+    boolean existsByNombre(String nombre);
 }
