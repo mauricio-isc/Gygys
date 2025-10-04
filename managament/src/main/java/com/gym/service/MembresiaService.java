@@ -83,7 +83,7 @@ public class MembresiaService {
         membresia = membresiaRepository.save(membresia);
 
         //crear notificacion de bienvenida
-        notificacionService.crearNotificacionBienvenida(miembro, membresia);
+        notificacionService.crearNotificacionesBienvenida(miembro, membresia);
 
         return membresiaMapper.toDto(membresia);
     }
@@ -124,7 +124,7 @@ public class MembresiaService {
         membresia = membresiaRepository.save(membresia);
 
         //crear  notificacion de bienvenida
-        notificacionService.crearNotificacionBienvenida(miembro, membresia);
+        notificacionService.crearNotificacionesBienvenida(miembro, membresia);
 
         return  membresiaMapper.toDto(membresia);
     }

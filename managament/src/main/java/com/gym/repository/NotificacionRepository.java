@@ -35,6 +35,9 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Long
     @Query("SELECT COUNT(n) FROM Notificacion n WHERE n.leida = false")
     long countNoLeidas();
 
+    @Query("SELECT COUNT(n) FROM Notificacion n WHERE n.leida = true")
+    long countLeidas();
+
     @Query("SELECT COUNT(n) FROM Notificacion n WHERE n.enviada = false")
     long countNoEnviadas();
 
