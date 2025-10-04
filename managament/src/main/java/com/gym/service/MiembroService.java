@@ -1,4 +1,4 @@
-package com.gym.service.mapper;
+package com.gym.service;
 
 import com.gym.dto.MiembroRequest;
 import com.gym.dto.MiembroResponse;
@@ -6,10 +6,10 @@ import com.gym.entity.Miembro;
 import com.gym.exception.BusinessException;
 import com.gym.exception.ResourceNotFoundException;
 import com.gym.repository.MiembroRepository;
+import com.gym.service.mapper.MiembroMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
