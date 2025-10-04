@@ -18,8 +18,8 @@ public class MembresiaResponse {
     private Long id;
     private Long miembroId;
     private String nombreMiembro;
-    private String tipoMembresia;
-    private String nombreTipoMembresia;
+    private Long tipoMembresiaId;
+    private String TipoMembresia;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String estado;
@@ -31,5 +31,6 @@ public class MembresiaResponse {
     private Long diasRestantes;
     private Boolean vencida;
     private Boolean vencePronto;
-    private Integer diasParaVencimiento;
+    private Long diasParaVencimiento;
+    private TipoMembresiaResponse tipoMembresia;
 }

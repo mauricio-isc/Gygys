@@ -1,14 +1,12 @@
 package com.gym.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,16 +30,4 @@ public class MiembroResponse {
     private Boolean tieneMembresiaActiva;
     private MembresiaResponse membresiaActiva;
 
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class MembresiaResponse{
-        private Long id;
-        private String nombre;
-        private String descripcion;
-        private Integer duracionDias;
-        private String duracionFormateada;
-        private java.math.BigDecimal precio;
-    }
 }

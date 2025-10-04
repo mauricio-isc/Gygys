@@ -1,16 +1,17 @@
 package com.gym.service.mapper;
 
-import com.gym.dto.NotificacionResponse;
-import com.gym.entity.Notificacion;
+import com.gym.dto.AuthResponse;
+import com.gym.entity.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
 
-    @Mapping(target = "miembro", source = "miembro.id")
-    @Mapping(target = "nombreMiembro", expression = "java(entity.getMiembro().getNombreCompleto())")
-    @Mapping(target = "tipoNotificacion", expression = "java(entity.getTipoNotificacion().name())")
-    @Mapping(target = "pendiente", expression = "java(entity.estaPendiente())")
-    NotificacionResponse toDto(Notificacion entity);
+    @Mapping(target = "id", source = "entity.id")
+    @Mapping(target = "username", source = "entity.username")
+    @Mapping(target = "email", source = "entity.email")
+    @Mapping(target = "nombreCompleto", expression = "java(entity.getNombreCompleto())")
+    @Mapping(target = "token", source = "token")
+    AuthResponse toAuthResponse(Usuario entity, String token);
 }

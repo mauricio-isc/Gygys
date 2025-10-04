@@ -2,11 +2,13 @@ package com.gym.service.mapper;
 
 import com.gym.dto.MiembroRequest;
 import com.gym.dto.MiembroResponse;
-import com.gym.entity.Membresia;
+import com.gym.dto.MembresiaResponse;
+import com.gym.dto.TipoMembresiaResponse;
 import com.gym.entity.Miembro;
+import com.gym.entity.Membresia;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring", uses = {MembresiaMapper.class})
+@Mapper(componentModel = "spring")
 public interface MiembroMapper extends EntityMapper<MiembroRequest, Miembro> {
 
     @Mapping(target = "id", ignore = true)
@@ -29,31 +31,26 @@ public interface MiembroMapper extends EntityMapper<MiembroRequest, Miembro> {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(MiembroRequest dto, @MappingTarget Miembro entity);
 
-    default MiembroResponse.MembresiaResponse mapMembresiaActiva(Miembro miembro) {
-        Membresia membresiaActiva = miembro.getMembresiaActiva();
-        if (membresiaActiva == null) {
-            return null;
-        }
+    default MembresiaResponse mapMembresiaActiva(Miembro miembro) {
+        Membresia m = miembro.getMembresiaActiva();
+        if (m == null) return null;
 
-        MiembroResponse.MembresiaResponse response = new MiembroResponse.MembresiaResponse();
-        response.setId(membresiaActiva.getId());
-        response.setFechaInicio(membresiaActiva.getFechaInicio());
-        response.setFechaFin(membresiaActiva.getFechaFin());
-        response.setEstado(membresiaActiva.getEstado().name());
-        response.setDiasRestantes(membresiaActiva.getDiasRestantes());
-        response.setVencePronto(membresiaActiva.vencePronto(7));
-
-        if (membresiaActiva.getTipoMembresia() == null) {
-            MiembroResponse.TipoMembresiaResponse tipoResponse = new MiembroResponse.TipoMembresiaResponse();
-
-            tipoResponse.setId(membresiaActiva.getTipoMembresia().getId());
-            tipoResponse.setNombre(membresiaActiva.getTipoMembresia().getNombre());
-            tipoResponse.setDescripcion(membresiaActiva.getTipoMembresia().getDescripcion());
-            tipoResponse.setDuracionDias(membresiaActiva.getTipoMembresia().getDuracionDias());
-            tipoResponse.setDuracionFormateada(membresiaActiva.getTipoMembresia().getDuracionFormateada());
-            tipoResponse.setPrecio(membresiaActiva.getTipoMembresia().getPrecio());
-            response.setTipoMembresia(tipoResponse);
-        }
-        return response;
+        return MembresiaResponse.builder()
+                .id(m.getId())
+                .fechaInicio(m.getFechaInicio())
+                .fechaFin(m.getFechaFin())
+                .estado(m.getEstado().name())
+                .diasRestantes(m.getDiasRestantes())
+                .vencePronto(m.vencePronto(7))
+                .tipoMembresia(
+                        TipoMembresiaResponse.builder()
+                                .id(m.getTipoMembresia().getId())
+                                .nombre(m.getTipoMembresia().getNombre())
+                                .descripcion(m.getTipoMembresia().getDescripcion())
+                                .duracionDias(m.getTipoMembresia().getDuracionDias())
+                                .duracionFormateada(m.getTipoMembresia().getDuracionFormateada())
+                                .precio(m.getTipoMembresia().getPrecio())
+                                .build())
+                .build();
     }
 }

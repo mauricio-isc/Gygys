@@ -20,6 +20,8 @@ public class NotificacionResponse {
     private String titulo;
     private String mensaje;
     private LocalDateTime fechaEnvio;
+    private Boolean leida;
+    private LocalDateTime fechaLectura;
     private Boolean enviada;
     private LocalDateTime fechaProgramada;
     private Boolean pendiente;
