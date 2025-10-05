@@ -119,4 +119,10 @@ public class NotificacionService {
     public long countPending() {
         return notificacionRepository.countNoEnviadas();
     }
+
+    @Transactional(readOnly = true)
+    public long countUnread() {
+        return notificacionRepository.countNoLeidas();
+    }
+
 }

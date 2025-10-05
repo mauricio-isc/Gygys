@@ -39,6 +39,12 @@ public class MiembroService {
                 .map(miembroMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public MiembroResponse findById(Long id){
+        Miembro miembro = miembroRepository.findByIdWithMembresias(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Miembro no encontrado con ID: "+id));
+        return miembroMapper.toDto(miembro);
+    }
 
     @Transactional
     public MiembroResponse create(MiembroRequest request){
