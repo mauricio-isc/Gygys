@@ -24,7 +24,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("SELECT u FROM Usuario u WHERE u.username = :username AND u.activo = true")
     Optional<Usuario> findByUsernameAndActivo(@Param("username") String username);
 
-    @Query("SELECT COUNT(u) FROM Usuario u WHERE U.activo = true")
-    long countByActivoTrue();
+    @Query("SELECT COUNT(u) FROM Usuario u WHERE u.activo = true")
+    long countActivos();
 
 }

@@ -56,12 +56,12 @@ public class Usuario implements UserDetails {
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean activo = true;
+    private boolean activo = true;
     
     @Column(name = "fecha_creacion", nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
     
-    @Column(name = "ultimo acceso")
+    @Column(name = "ultimo_acceso")
     private LocalDateTime ultimoAcceso;
 
     @Builder.Default
@@ -70,7 +70,7 @@ public class Usuario implements UserDetails {
     
     @Builder.Default
     @Column(nullable = false)
-    private Boolean bloquedo = false;
+    private Boolean bloqueado = false;
 
     @PrePersist
     protected void onCreate(){
@@ -122,12 +122,12 @@ public class Usuario implements UserDetails {
     public void incrementarIntentosFallidos(){
         this.intentosFallidos++;
         if (this.intentosFallidos >= 3){
-            this.bloquedo = true;
+            this.bloqueado = true;
         }
     }
 
     public void resetearIntentosFallidos(){
         this.intentosFallidos = 0;
-        this.bloquedo = false;
+        this.bloqueado = false;
     }
 }

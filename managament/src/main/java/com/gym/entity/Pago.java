@@ -54,7 +54,7 @@ public class Pago {
     @NotNull(message = "El usuario que registro el pago es requerido")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "registrado_por", nullable = false)
-    private Usuario registadoPor;
+    private Usuario registradoPor;
 
     public enum Metodopago{
         EFECTIVO,

@@ -40,19 +40,19 @@ public interface MembresiaRepository extends JpaRepository<Membresia, Long> {
     );
 
     @Query("SELECT m FROM Membresia m" +
-        "JOIN FETCH m.miembro mi"+
-        "JOIN FETCH m.tipoMembresia tm"+
-        "WHERE m.estado = 'ACTIVA' AND m.fechFin BETWEEN :fechaInicio AND :fechaFin"+
-        "ORDER BY m.fechaFin ASC")
+        " JOIN FETCH m.miembro mi"+
+        " JOIN FETCH m.tipoMembresia tm"+
+        " WHERE m.estado = 'ACTIVA' AND m.fechaFin BETWEEN :fechaInicio AND :fechaFin"+
+        " ORDER BY m.fechaFin ASC")
     List<Membresia> findProximasAVencerWithDetails(
             @Param("fechaInicio") LocalDate fechaInicio,
             @Param("fechaFin") LocalDate fechaFin
     );
 
-    @Query("SELECT m FROM Membresia m"+
-            "JOIN FETCH m.miembro mi"+
-            "JOIN FETCH m.tipoMembresia tm"+
-            "WHERE m.estado = :estado"
+    @Query("SELECT m FROM Membresia m "+
+            " JOIN FETCH m.miembro mi "+
+            " JOIN FETCH m.tipoMembresia tm "+
+            " WHERE m.estado = :estado"
     )
     List<Membresia> findByEstadoWithDetails(@Param("estado") Membresia.EstadoMembresia estado);
 

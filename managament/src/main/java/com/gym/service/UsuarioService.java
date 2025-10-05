@@ -39,6 +39,6 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public long countActiveUsers(){
-        return usuarioRepository.countByActivoTrue();
+        return usuarioRepository.countActivos();
     }
 }

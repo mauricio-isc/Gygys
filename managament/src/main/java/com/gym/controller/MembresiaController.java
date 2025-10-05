@@ -21,57 +21,54 @@ public class MembresiaController {
     private final MembresiaService membresiaService;
 
     @GetMapping
-    public ResponseEntity<List<MembresiaResponse>> findAll(){
+    public ResponseEntity<List<MembresiaResponse>> findAll() {
         List<MembresiaResponse> memberships = membresiaService.findAll();
         return ResponseEntity.ok(memberships);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MembresiaResponse> findById(@PathVariable Long id){
+    public ResponseEntity<MembresiaResponse> findById(@PathVariable Long id) {
         MembresiaResponse membership = membresiaService.findById(id);
         return ResponseEntity.ok(membership);
     }
 
     @PostMapping
-    public ResponseEntity<MembresiaResponse> create(@Valid @RequestBody MembresiaRequest request){
+    public ResponseEntity<MembresiaResponse> create(@Valid @RequestBody MembresiaRequest request) {
         MembresiaResponse membership = membresiaService.create(request);
         return new ResponseEntity<>(membership, HttpStatus.CREATED);
     }
 
     @PostMapping("/activate")
-    public ResponseEntity<MembresiaResponse> activateMemberships(
+    public ResponseEntity<MembresiaResponse> activateMembership(
             @RequestParam Long miembroId,
             @RequestParam Long tipoMembresiaId,
-            @RequestParam BigDecimal precioPagado
-            )
-    {
+            @RequestParam BigDecimal precioPagado) {
         MembresiaResponse membership = membresiaService.activateMembership(miembroId, tipoMembresiaId, precioPagado);
         return new ResponseEntity<>(membership, HttpStatus.CREATED);
     }
 
     @GetMapping("/expiring")
-    public ResponseEntity<List<MembresiaResponse>> findExpiringMemberships(){
+    public ResponseEntity<List<MembresiaResponse>> findExpiringMemberships() {
         List<MembresiaResponse> memberships = membresiaService.findExpiringMemberships();
-        return  ResponseEntity.ok(memberships);
+        return ResponseEntity.ok(memberships);
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<MembershipStats> getMembershipStats(){
+    public ResponseEntity<MembershipStats> getMembershipStats() {
         MembershipStats stats = new MembershipStats();
-
-        stats.setActiveMemberships(membresiaService.countActiveMembership());
+        stats.setActiveMemberships(membresiaService.countActiveMemberships());
         stats.setExpiredMemberships(membresiaService.countExpiredMemberships());
         stats.setExpiringMemberships(membresiaService.countExpiringMemberships());
         return ResponseEntity.ok(stats);
     }
 
     @PostMapping("/update-status")
-    public ResponseEntity<Void> updateMembershipStatus(){
-        membresiaService.updateMemberhipStatus();
+    public ResponseEntity<Void> updateMembershipStatus() {
+        membresiaService.updateMembershipStatus();
         return ResponseEntity.ok().build();
     }
 
-    public static class MembershipStats{
+    public static class MembershipStats {
         private long activeMemberships;
         private long expiredMemberships;
         private long expiringMemberships;

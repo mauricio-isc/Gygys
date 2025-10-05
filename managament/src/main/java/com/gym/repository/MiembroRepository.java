@@ -29,11 +29,12 @@ public interface MiembroRepository extends JpaRepository<Miembro, Long> {
     @Query("SELECT m FROM Miembro m WHERE m.activo = true")
     List<Miembro> findByActivoTrue();
 
-    @Query("SELECT m FROM Miembro m WHERE m.activo = true AND" +
-            "(LOWER(m.nombre) LIKE LOWER(CONCAT('%', :search, '%')) OR" +
-            "(LOWER(m.apellido) LIKE LOWER(CONCAT('%', :search, '%')) OR"+
-            "(LOWER(m.email) LIKE LOWER(CONCAT('%', :search, '%')) OR"+
-            "(LOWER(m.documentoIdentidad) LIKE LOWER(CONCAT('%', :search, '%')))")
+    @Query("SELECT m FROM Miembro m WHERE m.activo = true AND (" +
+       "LOWER(m.nombre) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+       "LOWER(m.apellido) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+       "LOWER(m.email) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+       "LOWER(m.documentoIdentidad) LIKE LOWER(CONCAT('%', :search, '%'))" +
+       ")")
     Page<Miembro> searchActiveMembers(@Param("search") String search, Pageable pageable);
 
     @Query("SELECT COUNT(m) FROM Miembro m WHERE m.activo = true")
@@ -46,8 +47,8 @@ public interface MiembroRepository extends JpaRepository<Miembro, Long> {
     List<Miembro> findTop5ByOrderByFechaRegistroDesc(Pageable pageable);
 
     @Query("SELECT m FROM Miembro m"+
-            "LEFT JOIN FETCH m.membresias mem"+
-            "WHERE m.id = :id")
+            " LEFT JOIN FETCH m.membresias mem"+
+            " WHERE m.id = :id")
     Optional<Miembro> findByIdWithMembresias(@Param("id") Long id);
 
 

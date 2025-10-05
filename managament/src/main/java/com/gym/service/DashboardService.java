@@ -29,12 +29,12 @@ public class DashboardService {
         DashboardStatsResponse response = new DashboardStatsResponse();
 
         //Estadistica de miembros
-        response.setTotalmiembros(miembroService.countActiveMembers());
+        response.setTotalMiembros(miembroService.countActiveMembers());
         response.setMiembrosActivos(miembroService.countActiveMembers());
         response.setMiembrosNuevosMes(miembroService.countNewMembersThisMonth());
 
         //Estadistica de membresias
-        response.setMembresiasActivas(membresiaService.countActiveMembership());
+        response.setMembresiasActivas(membresiaService.countActiveMemberships());
         response.setMembresiasVencidas(membresiaService.countExpiredMemberships());
         response.setMembresiasPorVencer(membresiaService.countExpiringMemberships());
 
@@ -99,7 +99,7 @@ public class DashboardService {
 
     @Transactional
     public void actualizarEstadosSistema(){
-        membresiaService.updateMemberhipStatus();
+        membresiaService.updateMembershipStatus();
 
         notificacionService.enviarNotificacionesPendientes();
     }

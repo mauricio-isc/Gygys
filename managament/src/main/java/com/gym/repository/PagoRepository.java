@@ -26,28 +26,28 @@ public interface PagoRepository extends JpaRepository<Pago, Long> {
     @Query("SELECT SUM(p.monto) FROM Pago p WHERE MONTH(p.fechaPago) = :month AND YEAR(p.fechaPago) = :year")
     BigDecimal sumMontoByMonthAndYear(@Param("month") int month, @Param("year") int year);
 
-    @Query("SELECT p FROM Pago p"+
-        "JOIN FETCH p.membresia m"+
-        "JOIN FETCH m.miembro mi"+
-        "JOINT FETCH p.registradoPor u"+
-        "ORDER BY p.fechaPago DESC")
+    @Query("SELECT p FROM Pago p "+
+        " JOIN FETCH p.membresia m "+
+        " JOIN FETCH m.miembro mi "+
+        " JOIN FETCH p.registradoPor u "+
+        " ORDER BY p.fechaPago DESC")
     List<Pago> findAllWithDetailsOrderByFechaPagoDesc();
 
     @Query("SELECT p FROM Pago p "+
-    "JOIN FETCH p.membresia m"+
-    "JOIN FETCH m.miembro mi"+
-    "JOIN FETCH p.registradoPor u"+
-    "WHERE p.fechaPago >= :fechaInicio"+
-    "ORDER BY p.fechaPago DESC")
+    " JOIN FETCH p.membresia m "+
+    " JOIN FETCH m.miembro mi "+
+    " JOIN FETCH p.registradoPor u "+
+    " WHERE p.fechaPago >= :fechaInicio "+
+    " ORDER BY p.fechaPago DESC")
     List<Pago> findByFechaPagoAfterWithDetails(@Param("fechaInicio") LocalDateTime fechaInicio);
 
     @Query("SELECT COUNT(p) FROM Pago p WHERE p.fechaPago >= :fechaInicio")
     long countByFechaPagoAfter(@Param("fechaInicio") LocalDateTime fechaInicio);
 
     @Query("SELECT p.metodoPago, COUNT(p), SUM(p.monto)"+
-    "FROM Pago p"+
-    "WHERE p.fechaPago >= :fechaInicio"+
-    "GROUP BY p.metodoPago")
+    " FROM Pago p "+
+    " WHERE p.fechaPago >= :fechaInicio "+
+    " GROUP BY p.metodoPago")
     List<Object[]> countAndSumByMetodoPagoAndFechaPagoAfter(
             @Param("fechaInicio") LocalDateTime fechaInicio
     );

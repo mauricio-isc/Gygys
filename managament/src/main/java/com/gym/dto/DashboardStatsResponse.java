@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DashboardStatsResponse {
-    private Long totalmiembros;
+    private Long totalMiembros;
     private Long miembrosActivos;
     private Long miembrosNuevosMes;
     private Long membresiasActivas;
