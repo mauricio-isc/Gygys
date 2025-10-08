@@ -6,13 +6,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-// Interfaz de paginación
 export interface Page<T> {
   content: T[];
   totalElements: number;
   totalPages: number;
-  number: number; // página actual
-  size: number;   // tamaño de página
+  number: number;
+  size: number;
 }
 
 @Component({
@@ -44,10 +43,7 @@ export class MembersComponent implements OnInit {
         this.totalElements = response.totalElements;
         this.loading = false;
       },
-      error: (error) => {
-        console.error('Error loading members:', error);
-        this.loading = false;
-      }
+      error: () => (this.loading = false)
     });
   }
 
@@ -60,10 +56,7 @@ export class MembersComponent implements OnInit {
           this.totalElements = response.totalElements;
           this.loading = false;
         },
-        error: (error) => {
-          console.error('Error searching members:', error);
-          this.loading = false;
-        }
+        error: () => (this.loading = false)
       });
     } else {
       this.loadMembers();
@@ -90,10 +83,7 @@ export class MembersComponent implements OnInit {
             Swal.fire('Eliminado', 'El miembro ha sido eliminado correctamente', 'success');
             this.loadMembers();
           },
-          error: (error) => {
-            console.error('Error deleting member:', error);
-            Swal.fire('Error', 'No se pudo eliminar el miembro', 'error');
-          }
+          error: () => Swal.fire('Error', 'No se pudo eliminar el miembro', 'error')
         });
       }
     });

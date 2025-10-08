@@ -1,0 +1,56 @@
+<div class="member-form-container">
+  <h2>{{ selectedMember.id ? 'Editar Miembro' : 'Nuevo Miembro' }}</h2>
+
+  <form (ngSubmit)="saveMember()" #memberForm="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Nombre</label>
+      <input type="text" class="form-control" [(ngModel)]="selectedMember.nombre" name="nombre" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Apellido</label>
+      <input type="text" class="form-control" [(ngModel)]="selectedMember.apellido" name="apellido" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" [(ngModel)]="selectedMember.email" name="email" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Teléfono</label>
+      <input type="text" class="form-control" [(ngModel)]="selectedMember.telefono" name="telefono">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Documento Identidad</label>
+      <input type="text" class="form-control" [(ngModel)]="selectedMember.documentoIdentidad" name="documentoIdentidad">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Género</label>
+      <select class="form-select" [(ngModel)]="selectedMember.genero" name="genero">
+        <option [ngValue]="'MASCULINO'">Masculino</option>
+        <option [ngValue]="'FEMENINO'">Femenino</option>
+        <option [ngValue]="'OTRO'">Otro</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Fecha de Nacimiento</label>
+      <input type="date" class="form-control" [(ngModel)]="selectedMember.fechaNacimiento" name="fechaNacimiento">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Dirección</label>
+      <textarea class="form-control" [(ngModel)]="selectedMember.direccion" name="direccion"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Notas</label>
+      <textarea class="form-control" [(ngModel)]="selectedMember.notas" name="notas"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">{{ selectedMember.id ? 'Actualizar' : 'Crear' }}</button>
+  </form>
+</div>

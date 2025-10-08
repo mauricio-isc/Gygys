@@ -7,6 +7,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MembersComponent } from './components/members/members.component';
 import { MembershipsComponent } from './components/memberships/memberships.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { MemberFormComponent } from './components/members/members-form.component';
 
 
 export const appRoutes: Routes = [
@@ -16,7 +17,9 @@ export const appRoutes: Routes = [
   { path: 'members', component: MembersComponent, canActivate: [AuthGuard] },
   { path: 'memberships', component: MembershipsComponent, canActivate: [AuthGuard] },
   { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '/dashboard' }
+    { path: 'members/new', component: MemberFormComponent, canActivate: [AuthGuard] },
+  { path: 'members/:id', component: MemberFormComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/dashboard' },
 ];
 
 @NgModule({
