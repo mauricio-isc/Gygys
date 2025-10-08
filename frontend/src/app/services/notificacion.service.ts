@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable,tap } from "rxjs";
 import { Notificacion } from "../models/notificacion.model";
 
 @Injectable({
@@ -34,6 +34,21 @@ export class NotificacionService{
     }
 
     getNotificationStats(): Observable<any> {
-        return this.http.get(`${this.apiUrl}/stats`);
+    const token = localStorage.getItem('auth_token'); // <--- debug token
+    console.log('Token being sent to /stats:', token);
+
+    // Incluimos el header Authorization explícitamente
+    return this.http.get(`${this.apiUrl}/stats`, {
+        headers: {
+        Authorization: `Bearer ${token}`
+        },
+        observe: 'response' // nos permite ver todo el response
+    }).pipe(
+        tap({
+        next: (res) => console.log('Response received:', res),
+        error: (err) => console.error('Error loading stats:', err)
+        })
+    );
     }
+
 }

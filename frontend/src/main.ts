@@ -1,6 +1,16 @@
+import 'zone.js';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { AppComponent } from './app/app.component';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
+import { appRoutes } from './app/app-routing.module'; // <-- ahora sí funciona
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAnimations(),
+    provideHttpClient(),
+    provideRouter(appRoutes),
+    // Aquí puedes agregar tus servicios singleton si los necesitas
+  ]
+}).catch(err => console.error(err));

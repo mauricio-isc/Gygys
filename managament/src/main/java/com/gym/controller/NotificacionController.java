@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notifications")
+@RequestMapping("/notifications")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class NotificacionController {
@@ -45,7 +45,7 @@ public class NotificacionController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/stats")
+    @GetMapping(value = "/stats", produces = "application/json")
     public ResponseEntity<NotificationStats> getNotificationStats() {
         NotificationStats stats = new NotificationStats();
         stats.setUnreadCount(notificacionService.countUnread());

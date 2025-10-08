@@ -10,8 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -73,28 +78,6 @@ public class DashboardService {
         return pagoRepository.sumMontoByYear(currentYear);
     }
 
-    private List<DashboardStatsResponse.IngresoMensual> getIngresosPorMes() {
-        return java.util.stream.IntStream.range(0, 6)
-                .mapToObj(i -> {
-                    LocalDateTime date = LocalDateTime.now().minusMonths(i);
-                    int month = date.getMonthValue();
-                    int year = date.getYear();
-
-                    BigDecimal ingreso = pagoRepository.sumMontoByMonthAndYear(month, year);
-                    long cantidadMembresias = membresiaRepository.countByFechaCreacionAfter(
-                            date.withDayOfMonth(1).toLocalDate()
-                    );
-
-                    DashboardStatsResponse.IngresoMensual ingresoMensual = new DashboardStatsResponse.IngresoMensual();
-                    ingresoMensual.setMes(date.getMonth().name() + " " + year);
-                    ingresoMensual.setIngreso(ingreso != null ? ingreso : BigDecimal.ZERO);
-                    ingresoMensual.setCantidadMembresias(Long.valueOf(cantidadMembresias));
-
-                    return ingresoMensual;
-                })
-                .sorted((a, b) -> a.getMes().compareTo(b.getMes()))
-                .collect(Collectors.toList());
-    }
 
 
     @Transactional
@@ -102,5 +85,34 @@ public class DashboardService {
         membresiaService.updateMembershipStatus();
 
         notificacionService.enviarNotificacionesPendientes();
+    }
+
+    private List<DashboardStatsResponse.IngresoMensual> getIngresosPorMes() {
+        return IntStream.range(0, 6)
+                .mapToObj(i -> {
+                    LocalDateTime date = LocalDateTime.now().minusMonths(i);
+
+                    BigDecimal ingreso = pagoRepository.sumMontoByMonthAndYear(
+                            date.getMonthValue(), date.getYear()
+                    );
+                    long cantidadMembresias = membresiaRepository.countByFechaCreacionAfter(
+                            date.withDayOfMonth(1).toLocalDate()
+                    );
+
+                    DashboardStatsResponse.IngresoMensual ingresoMensual = new DashboardStatsResponse.IngresoMensual();
+                    ingresoMensual.setMes(date.format(DateTimeFormatter.ofPattern("MMM yyyy", new Locale("es"))));
+                    ingresoMensual.setIngreso(ingreso != null ? ingreso : BigDecimal.ZERO);
+                    ingresoMensual.setCantidadMembresias(cantidadMembresias);
+
+                    return ingresoMensual;
+                })
+                // Orden cronológico del más antiguo al más reciente
+                .sorted(Comparator.comparing(im -> {
+                    String[] parts = im.getMes().split(" ");
+                    Month month = Month.valueOf(parts[0].toUpperCase());
+                    int year = Integer.parseInt(parts[1]);
+                    return year * 100 + month.getValue();
+                }))
+                .collect(Collectors.toList());
     }
 }

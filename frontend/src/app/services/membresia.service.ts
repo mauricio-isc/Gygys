@@ -34,7 +34,7 @@ export class MembresiaService {
         return this.http.post<Membresia>(`${this.apiUrl}/activate`, null, { params });
     }
 
-    findExperingMemberships(): Observable<Membresia[]> {
+    findExpiringMemberships(): Observable<Membresia[]> {
         return this.http.get<Membresia[]>(`${this.apiUrl}/expiring`);
     }
 

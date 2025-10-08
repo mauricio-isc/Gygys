@@ -1,0 +1,181 @@
+<div class="dashboard-container">
+  
+  <div class="dashboard-header">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h1>Dashboard</h1>
+        <p class="text-muted">Bienvenido, {{ currentUser?.nombreCompleto }}</p>
+      </div>
+      <div class="col-md-4 text-end">
+        <button class="btn btn-outline-primary" (click)="refreshData()">
+          <i class="fas fa-sync-alt"></i> Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-3">Cargando estadísticas...</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div *ngIf="!loading && stats" class="stats-section">
+    <div class="row g-4 mb-4">
+      <!-- Total Miembros -->
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-icon bg-primary">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stats-content">
+            <h3>{{ stats.totalMiembros }}</h3>
+            <p>Total Miembros</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Miembros Activos -->
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-icon bg-success">
+            <i class="fas fa-user-check"></i>
+          </div>
+          <div class="stats-content">
+            <h3>{{ stats.miembrosActivos }}</h3>
+            <p>Miembros Activos</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Membresías Activas -->
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-icon bg-info">
+            <i class="fas fa-id-card"></i>
+          </div>
+          <div class="stats-content">
+            <h3>{{ stats.membresiasActivas }}</h3>
+            <p>Membresías Activas</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ingresos del Mes -->
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-icon bg-warning">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+          <div class="stats-content">
+            <h3>{{ formatCurrency(stats.ingresosMes) }}</h3>
+            <p>Ingresos del Mes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts and Tables -->
+    <div class="row">
+      <!-- Income Chart -->
+      <div class="col-md-8">
+        <div class="card chart-card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Ingresos por Mes</h5>
+          </div>
+          <div class="card-body">
+            <canvas baseChart
+              [data]="incomeChartData"
+              [options]="incomeChartOptions"
+              [type]="'bar'">
+            </canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Estadísticas Rápidas</h5>
+          </div>
+          <div class="card-body">
+            <div class="quick-stat-item">
+              <span class="stat-label">Miembros Nuevos (Mes)</span>
+              <span class="stat-value">{{ stats.miembrosNuevosMes }}</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="stat-label">Membresías Vencidas</span>
+              <span class="stat-value text-danger">{{ stats.membresiasVencidas }}</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="stat-label">Por Vencer (7 días)</span>
+              <span class="stat-value text-warning">{{ stats.membresiasPorVencer }}</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="stat-label">Notificaciones Pendientes</span>
+              <span class="stat-value text-info">{{ stats.notificacionesPendientes }}</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="stat-label">Ingresos Anuales</span>
+              <span class="stat-value">{{ formatCurrency(stats.ingresosAnio) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row mt-4">
+      <!-- Recent Members -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Últimos Miembros Registrados</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="stats.ultimosMiembrosRegistrados.length === 0" class="text-muted text-center">
+              No hay miembros recientes
+            </div>
+            <div *ngFor="let member of stats.ultimosMiembrosRegistrados" class="recent-item">
+              <div class="recent-item-info">
+                <h6>{{ member.nombreCompleto }}</h6>
+                <p class="text-muted">{{ member.email }}</p>
+              </div>
+              <span class="badge" [ngClass]="member.tieneMembresiaActiva ? 'bg-success' : 'bg-secondary'">
+                {{ member.tieneMembresiaActiva ? 'Activo' : 'Sin membresía' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expiring Memberships -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Membresías Próximas a Vencer</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="stats.membresiasProximasAVencer.length === 0" class="text-muted text-center">
+              No hay membresías próximas a vencer
+            </div>
+            <div *ngFor="let membership of stats.membresiasProximasAVencer" class="recent-item">
+              <div class="recent-item-info">
+                <h6>{{ membership.nombreMiembro }}</h6>
+                <p class="text-muted">
+                  Vence: {{ membership.fechaFin | date:'shortDate' }}
+                  ({{ membership.diasRestantes }} días)
+                </p>
+              </div>
+              <span class="badge bg-warning">Próximo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,14 +7,17 @@ import com.gym.repository.UsuarioRepository;
 import com.gym.security.JwtService;
 import com.gym.service.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -31,7 +34,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-
+        log.info("🔐 AuthenticationService - authenticate - username: {}", request.getUsername());
         Usuario usuario = usuarioRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 

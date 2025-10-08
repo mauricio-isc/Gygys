@@ -1,0 +1,83 @@
+<div class="memberships-container">
+  <div class="page-header">
+    <h2>Gestión de Membresías</h2>
+    <div class="header-actions">
+      <button class="btn btn-outline-warning me-2" (click)="loadExpiringMemberships()">
+        <i class="fas fa-exclamation-triangle"></i> Próximas a Vencer
+      </button>
+      <button class="btn btn-outline-primary me-2" (click)="loadMemberships()">
+        <i class="fas fa-list"></i> Todas
+      </button>
+      <button class="btn btn-primary" (click)="activateMembership()">
+        <i class="fas fa-plus"></i> Activar Membresía
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <!-- Memberships Table -->
+  <div *ngIf="!loading" class="table-responsive">
+    <table class="table table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Miembro</th>
+          <th>Tipo de Membresía</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Estado</th>
+          <th>Precio Pagado</th>
+          <th>Días Restantes</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let membership of memberships">
+          <td>
+            <div class="member-info">
+              <h6>{{ membership.nombreMiembro }}</h6>
+            </div>
+          </td>
+          <td>{{ membership.nombreTipoMembresia }}</td>
+          <td>{{ membership.fechaInicio | date:'shortDate' }}</td>
+          <td>{{ membership.fechaFin | date:'shortDate' }}</td>
+          <td>
+            <span class="badge" [ngClass]="getStatusBadgeClass(membership.estado)">
+              {{ membership.estado }}
+            </span>
+          </td>
+          <td>{{ formatCurrency(membership.precioPagado) }}</td>
+          <td>
+            <span [ngClass]="{
+              'text-danger': membership.diasRestantes <= 0,
+              'text-warning': membership.diasRestantes <= 7 && membership.diasRestantes > 0,
+              'text-success': membership.diasRestantes > 7
+            }">
+              {{ membership.diasRestantes }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary me-2">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-success">
+              <i class="fas fa-redo"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && memberships.length === 0" class="text-center py-5">
+    <i class="fas fa-id-card fa-3x text-muted mb-3"></i>
+    <h4 class="text-muted">No hay membresías registradas</h4>
+    <p class="text-muted">Comienza activando una nueva membresía</p>
+  </div>
+</div>

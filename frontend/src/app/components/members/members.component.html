@@ -1,0 +1,94 @@
+<div class="members-container">
+  <div class="page-header">
+    <h2>Gestión de Miembros</h2>
+    <button class="btn btn-primary" routerLink="/members/new">
+      <i class="fas fa-plus"></i> Nuevo Miembro
+    </button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-section mb-4">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Buscar miembros..."
+            [(ngModel)]="searchTerm"
+            (keyup.enter)="searchMembers()"
+          >
+          <button class="btn btn-outline-secondary" (click)="searchMembers()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <!-- Members Table -->
+  <div *ngIf="!loading" class="table-responsive">
+    <table class="table table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Estado</th>
+          <th>Membresía</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let member of members">
+          <td>
+            <div class="member-info">
+              <h6>{{ member.nombreCompleto }}</h6>
+              <small class="text-muted">{{ member.documentoIdentidad }}</small>
+            </div>
+          </td>
+          <td>{{ member.email }}</td>
+          <td>{{ member.telefono || 'N/A' }}</td>
+          <td>
+            <span class="badge" [ngClass]="member.activo ? 'bg-success' : 'bg-secondary'">
+              {{ member.activo ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td>
+            <span class="badge" [ngClass]="member.tieneMembresiaActiva ? 'bg-success' : 'bg-warning'">
+              {{ member.tieneMembresiaActiva ? 'Activa' : 'Sin membresía' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/members', member.id]">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteMember(member)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="!loading && totalElements > pageSize" class="pagination-section">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 0">
+          <a class="page-link" (click)="onPageChange(currentPage - 1)">Anterior</a>
+        </li>
+
+        
+      </ul>
+    </nav>
+  </div>
+</div>
