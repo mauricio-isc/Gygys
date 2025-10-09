@@ -3,6 +3,7 @@ package com.gym.dto;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -14,5 +15,7 @@ public class TipoMembresiaResponse {
     private String     descripcion;
     private Integer    duracionDias;
     private String     duracionFormateada;
+    private Boolean    activo;
+    private LocalDateTime fechaCreacion;
     private BigDecimal precio;
 }

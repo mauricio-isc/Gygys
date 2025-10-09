@@ -1,0 +1,97 @@
+<div class="activation-form">
+  <div class="form-header">
+    <h5>Activar Nueva Membresía</h5>
+    <p class="text-muted">Complete los datos para activar una nueva membresía</p>
+  </div>
+
+  <form (ngSubmit)="onSubmit()">
+ 
+    <div class="mb-3">
+      <label for="miembroSelect" class="form-label">Miembro *</label>
+      <select 
+        id="miembroSelect" 
+        class="form-select" 
+        [(ngModel)]="selectedMiembroId" 
+        name="miembroSelect"
+        [disabled]="loadingMiembros"
+        required>
+        <option value="">-- Seleccione un miembro --</option>
+        <option *ngFor="let miembro of miembros" [value]="miembro.id">
+          {{ miembro.nombre }} {{ miembro.apellido }} - {{ miembro.email }}
+        </option>
+      </select>
+      <div *ngIf="loadingMiembros" class="form-text text-muted">
+        <i class="fas fa-spinner fa-spin"></i> Cargando miembros...
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="tipoMembresiaSelect" class="form-label">Tipo de Membresía *</label>
+      <select 
+        id="tipoMembresiaSelect" 
+        class="form-select" 
+        [(ngModel)]="selectedTipoMembresiaId" 
+        name="tipoMembresiaSelect"
+        (change)="onTipoMembresiaChange()"
+        [disabled]="loadingTipos"
+        required>
+        <option value="">-- Seleccione un tipo --</option>
+        <option *ngFor="let tipo of tiposMembresia" [value]="tipo.id">
+          {{ tipo.nombre }} - {{ formatCurrency(tipo.precio) }} ({{ tipo.duracionDias }} días)
+        </option>
+      </select>
+      <div *ngIf="loadingTipos" class="form-text text-muted">
+        <i class="fas fa-spinner fa-spin"></i> Cargando tipos de membresía...
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="precioPagado" class="form-label">Precio Pagado *</label>
+      <input 
+        type="number" 
+        id="precioPagado" 
+        class="form-control" 
+        [(ngModel)]="precioPagado" 
+        name="precioPagado"
+        placeholder="Ingrese el monto pagado" 
+        step="0.01" 
+        min="0"
+        required>
+      <div class="form-text">
+        Precio sugerido: <strong>{{ formatCurrency(precioSugerido) }}</strong>
+      </div>
+    </div>
+
+ 
+    <div *ngIf="isFormValid()" class="alert alert-info">
+      <h6>Resumen de Activación:</h6>
+      <div *ngIf="getSelectedMiembro()">
+        <strong>Miembro:</strong> {{ getSelectedMiembro()?.nombre }} {{ getSelectedMiembro()?.apellido }}
+      </div>
+      <div *ngIf="getSelectedTipoMembresia()">
+        <strong>Membresía:</strong> {{ getSelectedTipoMembresia()?.nombre }} 
+        ({{ getSelectedTipoMembresia()?.duracionDias }} días)
+      </div>
+      <div>
+        <strong>Precio:</strong> {{ formatCurrency(precioPagado) }}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button 
+        type="button" 
+        class="btn btn-outline-secondary me-2" 
+        (click)="onCancel()"
+        [disabled]="submitting">
+        Cancelar
+      </button>
+      <button 
+        type="submit" 
+        class="btn btn-primary" 
+        [disabled]="!isFormValid() || submitting">
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2"></span>
+        {{ submitting ? 'Activando...' : 'Activar Membresía' }}
+      </button>
+    </div>
+  </form>
+</div>

@@ -8,9 +8,20 @@
       <button class="btn btn-outline-primary me-2" (click)="loadMemberships()">
         <i class="fas fa-list"></i> Todas
       </button>
-      <button class="btn btn-primary" (click)="activateMembership()">
+      <!-- Cambia el método aquí -->
+      <button class="btn btn-primary" (click)="showActivationForm()" [disabled]="showActivationModal">
         <i class="fas fa-plus"></i> Activar Membresía
       </button>
+    </div>
+  </div>
+
+  <!-- AGREGAR ESTA SECCIÓN DEL MODAL -->
+  <div *ngIf="showActivationModal" class="activation-modal">
+    <div class="modal-content">
+      <app-membership-activate
+        (membershipActivated)="activateMembership($event)"
+        (cancel)="onActivationCancel()">
+      </app-membership-activate>
     </div>
   </div>
 

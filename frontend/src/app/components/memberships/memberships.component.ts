@@ -3,6 +3,7 @@ import { MembresiaService } from '../../services/membresia.service';
 import { Membresia } from '../../models/membresia.model';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
+import { MembershipActivationComponent } from '../membership-activate/membership-activate';
 
 @Component({
   selector: 'app-memberships',
@@ -10,12 +11,14 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./memberships.component.scss'],
   standalone: true,
   imports:[
-    CommonModule
+    CommonModule,
+    MembershipActivationComponent
   ]
 })
 export class MembershipsComponent implements OnInit {
   memberships: Membresia[] = [];
   loading = false;
+  showActivationModal = false;
 
   constructor(private membresiaService: MembresiaService) {}
 
@@ -51,13 +54,41 @@ export class MembershipsComponent implements OnInit {
     });
   }
 
-  activateMembership(): void {
-    // Aquí se implementaría el diálogo para activar membresía
-    Swal.fire({
-      title: 'Activar Membresía',
-      text: 'Funcionalidad en desarrollo',
-      icon: 'info'
+  showActivationForm(): void {
+    this.showActivationModal = true;  
+  }
+
+  activateMembership(activationData: any): void {
+    this.membresiaService.activateMembership(
+      activationData.miembroId,
+      activationData.tipoMembresiaId,
+      activationData.precioPagado
+    ).subscribe({
+      next: (membresia) => {
+        this.showActivationModal = false; 
+        Swal.fire({
+          title: '¡Membresia Activada!',
+          text: `La membresia ha sido activada exitosamente para el usuario ${membresia.nombreMiembro}`,
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+        this.loadMemberships();
+      },
+      error: (error) => {
+        console.error('Error activating membership:', error);
+        this.showActivationModal = false; 
+        Swal.fire({
+          title: 'Error',
+          text: error.error?.message || 'Error al activar la membresía',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
     });
+  }
+
+  onActivationCancel(): void {
+    this.showActivationModal = false; 
   }
 
   formatCurrency(value: number): string {
