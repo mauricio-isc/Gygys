@@ -12,6 +12,7 @@ class ManagamentApplicationTests {
 
 	@Test
 	void contextLoads() {
+        //pronto implementare pruebas unitarias, para aprender y repazar lo que vi durante mi trayectoria :D
 	}
 
 }

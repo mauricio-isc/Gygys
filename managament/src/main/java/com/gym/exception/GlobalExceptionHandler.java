@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleAll(Exception ex) {
-        log.error("❌ GlobalExceptionHandler - {}", ex.getMessage(), ex);
+        log.error(" GlobalExceptionHandler - {}", ex.getMessage(), ex);
         return ResponseEntity.status(403).body(ex.getMessage());
     }
 
