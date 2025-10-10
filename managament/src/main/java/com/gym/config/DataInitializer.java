@@ -28,9 +28,9 @@ public class DataInitializer {
                 admin.setBloqueado(false);
 
                 userRepository.save(admin);
-                System.out.println("✅ Usuario admin creado con contraseña 'admin123'");
+                System.out.println("Usuario admin creado con contraseña 'admin123'");
             } else {
-                System.out.println("ℹ️ Usuario admin ya existe, no se crea nuevamente.");
+                System.out.println("ℹUsuario admin ya existe, no se crea nuevamente.");
             }
         };
     }
