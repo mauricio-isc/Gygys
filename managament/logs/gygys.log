@@ -569,3 +569,301 @@
 2025-10-09 18:36:21 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
 2025-10-09 18:36:21 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [DashboardStatsResponse(totalMiembros=9, miembrosActivos=9, miembrosNuevosMes=11, membresiasActivas=8 (truncated)...]
 2025-10-09 18:36:21 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:36:52 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:36:52 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:36:52 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:36:52 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:36:52 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:36:52 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:36:52 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:36:52 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:36:52 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:36:52 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:36:52 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@d2419c5]
+2025-10-09 18:36:52 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:37:22 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:37:22 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:37:22 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:37:22 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:37:22 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:37:22 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:37:22 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:37:22 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:37:22 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:37:22 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:37:22 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@670c4c7b]
+2025-10-09 18:37:22 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:37:52 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:37:52 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:37:52 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:37:52 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:37:52 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:37:52 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:37:52 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:37:52 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:37:52 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:37:52 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:37:52 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@3f3cb9f2]
+2025-10-09 18:37:52 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:38:22 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:38:22 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:38:22 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:38:22 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:38:22 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:38:22 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:38:22 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:38:22 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:38:22 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:38:22 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:38:22 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@e17cd35]
+2025-10-09 18:38:22 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:38:52 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:38:52 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:38:52 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:38:52 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:38:52 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:38:52 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:38:52 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:38:52 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:38:52 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:38:52 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:38:52 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@72e54dd0]
+2025-10-09 18:38:52 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:39:22 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:39:22 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:39:22 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:39:22 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:39:22 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:39:22 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:39:22 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:39:22 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:39:22 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:39:22 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:39:22 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@5bb5caee]
+2025-10-09 18:39:22 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:40:07 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:40:07 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:40:07 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:40:07 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:40:07 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:40:07 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:40:07 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:40:07 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:40:07 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:40:07 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:40:07 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@22b0a221]
+2025-10-09 18:40:07 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:40:44 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:40:44 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:40:44 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:40:44 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:40:44 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:40:44 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:40:44 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:40:44 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:40:44 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:40:44 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:40:44 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@448890ae]
+2025-10-09 18:40:44 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:41:44 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:41:44 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:41:44 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:41:44 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:41:44 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:41:44 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:41:44 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:41:44 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:41:44 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:41:44 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:41:44 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@4ea53fc5]
+2025-10-09 18:41:44 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:42:36 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:42:36 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:42:36 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:42:36 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:42:36 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:42:36 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:42:36 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:42:36 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:42:36 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:42:36 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:42:36 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@7b2ec714]
+2025-10-09 18:42:36 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:42:37 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:42:37 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:42:37 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:42:37 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:42:37 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:42:37 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:42:37 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:42:37 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:42:37 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:42:37 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@635b3fd1]
+2025-10-09 18:42:37 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:42:37 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /dashboard/stats
+2025-10-09 18:42:37 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/dashboard/stats
+2025-10-09 18:42:37 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:42:37 [http-nio-8080-exec-4] WARN  c.g.security.JwtAuthenticationFilter - JWT Filter - No Bearer token
+2025-10-09 18:42:37 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-10-09 18:42:37 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /dashboard/stats
+2025-10-09 18:42:37 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/stats", parameters={}
+2025-10-09 18:42:37 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.DashboardController#getStats()
+2025-10-09 18:42:38 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-10-09 18:42:38 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [DashboardStatsResponse(totalMiembros=9, miembrosActivos=9, miembrosNuevosMes=11, membresiasActivas=8 (truncated)...]
+2025-10-09 18:42:38 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:43:08 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:43:08 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:43:08 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:43:08 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:43:08 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:43:08 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:43:08 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:43:08 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:43:08 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:43:08 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:43:08 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@4afc2fe]
+2025-10-09 18:43:08 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:43:38 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:43:38 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:43:38 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:43:38 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:43:38 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:43:38 [http-nio-8080-exec-7] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:43:38 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:43:38 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:43:38 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:43:38 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:43:38 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@6e8b4dda]
+2025-10-09 18:43:38 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:44:08 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:44:08 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:44:08 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:44:08 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:44:08 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:44:08 [http-nio-8080-exec-1] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:44:08 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:44:08 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:44:08 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:44:08 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:44:08 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@4c6feaae]
+2025-10-09 18:44:08 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:44:38 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:44:38 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:44:38 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:44:38 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:44:38 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:44:38 [http-nio-8080-exec-2] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:44:38 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:44:38 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:44:38 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:44:38 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:44:38 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@41462d56]
+2025-10-09 18:44:38 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:45:08 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:45:08 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:45:08 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:45:08 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:45:08 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:45:08 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:45:08 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:45:08 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:45:08 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:45:08 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:45:08 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@bfb5257]
+2025-10-09 18:45:08 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:45:38 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:45:38 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:45:38 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:45:38 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:45:38 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:45:38 [http-nio-8080-exec-5] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:45:38 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:45:38 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:45:38 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:45:38 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:45:38 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@556df978]
+2025-10-09 18:45:38 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:46:44 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:46:44 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:46:44 [http-nio-8080-exec-9] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:46:44 [http-nio-8080-exec-9] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:46:44 [http-nio-8080-exec-9] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:46:44 [http-nio-8080-exec-9] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:46:44 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:46:44 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:46:44 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:46:44 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:46:44 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@50c74e16]
+2025-10-09 18:46:44 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:47:44 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:47:44 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:47:44 [http-nio-8080-exec-10] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:47:44 [http-nio-8080-exec-10] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:47:44 [http-nio-8080-exec-10] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:47:44 [http-nio-8080-exec-10] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:47:44 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:47:44 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:47:44 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:47:44 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:47:44 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@407e435d]
+2025-10-09 18:47:44 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:48:44 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:48:44 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:48:44 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:48:44 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:48:44 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:48:44 [http-nio-8080-exec-3] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:48:44 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:48:44 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:48:44 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:48:44 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:48:44 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@3c17c5e6]
+2025-10-09 18:48:44 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:49:44 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:49:44 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:49:44 [http-nio-8080-exec-6] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:49:44 [http-nio-8080-exec-6] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:49:44 [http-nio-8080-exec-6] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:49:44 [http-nio-8080-exec-6] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:49:44 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:49:44 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:49:44 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:49:44 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:49:44 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@17b5e58d]
+2025-10-09 18:49:44 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:50:44 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:50:44 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:50:44 [http-nio-8080-exec-8] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:50:44 [http-nio-8080-exec-8] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:50:44 [http-nio-8080-exec-8] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:50:44 [http-nio-8080-exec-8] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:50:44 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:50:44 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:50:44 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:50:44 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:50:44 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@4d97add4]
+2025-10-09 18:50:44 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:51:44 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:51:44 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:51:44 [http-nio-8080-exec-9] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:51:44 [http-nio-8080-exec-9] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:51:44 [http-nio-8080-exec-9] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:51:44 [http-nio-8080-exec-9] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:51:44 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:51:44 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:51:44 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:51:44 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:51:44 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@6141c72b]
+2025-10-09 18:51:44 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-09 18:52:44 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /notifications/stats
+2025-10-09 18:52:44 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/stats
+2025-10-09 18:52:44 [http-nio-8080-exec-10] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/stats
+2025-10-09 18:52:44 [http-nio-8080-exec-10] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-09 18:52:44 [http-nio-8080-exec-10] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Username: admin
+2025-10-09 18:52:44 [http-nio-8080-exec-10] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Authentication set for user: admin
+2025-10-09 18:52:44 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/stats
+2025-10-09 18:52:44 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/stats", parameters={}
+2025-10-09 18:52:44 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#getNotificationStats()
+2025-10-09 18:52:44 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2025-10-09 18:52:44 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.gym.controller.NotificacionController$NotificationStats@54bb8e6d]
+2025-10-09 18:52:44 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
