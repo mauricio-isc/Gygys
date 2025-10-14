@@ -51,5 +51,9 @@ public interface MiembroRepository extends JpaRepository<Miembro, Long> {
             " WHERE m.id = :id")
     Optional<Miembro> findByIdWithMembresias(@Param("id") Long id);
 
+    List<Miembro> findByFechaRegistroAfter(LocalDateTime fecha);
+
+    @Query("SELECT m FROM Miembro m WHERE m.fechaRegistro >= :fecha AND m.activo = true")
+    List<Miembro> findMiembrosNuevosActivos(@Param("fecha") LocalDateTime fecha);
 
 }

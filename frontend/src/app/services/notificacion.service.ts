@@ -33,10 +33,15 @@ export class NotificacionService{
         return this.http.post<void>(`${this.apiUrl}/send-pending`, null);
     }
 
+    runAutomaticNotifications(): Observable<string> {
+        return this.http.post<string>(`${this.apiUrl}/run-automatic`, null);
+    }
+
     getNotificationStats(): Observable<any> {
     const token = localStorage.getItem('auth_token'); // <--- debug token
     console.log('Token being sent to /stats:', token);
 
+    
     // Incluimos el header Authorization explícitamente
     return this.http.get(`${this.apiUrl}/stats`, {
         headers: {
