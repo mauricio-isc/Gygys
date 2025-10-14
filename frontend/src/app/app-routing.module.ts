@@ -8,7 +8,7 @@ import { MembersComponent } from './components/members/members.component';
 import { MembershipsComponent } from './components/memberships/memberships.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { MemberFormComponent } from './components/members/members-form.component';
-
+import { PagosMiembroComponent } from './components/pagos/Pagos-miembro.component';
 
 export const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -17,8 +17,9 @@ export const appRoutes: Routes = [
   { path: 'members', component: MembersComponent, canActivate: [AuthGuard] },
   { path: 'memberships', component: MembershipsComponent, canActivate: [AuthGuard] },
   { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard] },
-    { path: 'members/new', component: MemberFormComponent, canActivate: [AuthGuard] },
+  { path: 'members/new', component: MemberFormComponent, canActivate: [AuthGuard] },
   { path: 'members/:id', component: MemberFormComponent, canActivate: [AuthGuard] },
+  { path: 'pagos/miembro/:id', component: PagosMiembroComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/dashboard' },
 ];
 
@@ -26,4 +27,5 @@ export const appRoutes: Routes = [
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+
+export class AppRoutingModule { }

@@ -27,6 +27,11 @@ export class MiembroService {
 
     return this.http.get<Page<Miembro>>(this.apiUrl, { params });
   }
+  
+    searchMiembros(term: string): Observable<any> {
+    const params = { search: term };
+    return this.http.get(`${this.apiUrl}/search`, { params });
+  }
 
   search(search: string, page:number=0, size:number=10): Observable<Page<Miembro>> {
     const params = new HttpParams()

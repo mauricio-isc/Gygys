@@ -8,9 +8,12 @@ import com.gym.exception.BusinessException;
 import com.gym.repository.MembresiaRepository;
 import com.gym.repository.MiembroRepository;
 import com.gym.repository.TipoMembresiaRepository;
+import com.gym.repository.PagoRepository;
 import com.gym.repository.ConfiguracionSistemaRepository;
 import com.gym.service.mapper.MembresiaMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MembresiaService {
@@ -27,6 +31,7 @@ public class MembresiaService {
     private final MembresiaRepository membresiaRepository;
     private final MiembroRepository miembroRepository;
     private final TipoMembresiaRepository tipoMembresiaRepository;
+    private final PagoRepository pagoRepository;
     private final ConfiguracionSistemaRepository configuracionRepository;
     private final UsuarioService usuarioService;
     private final MembresiaMapper membresiaMapper;
@@ -49,6 +54,9 @@ public class MembresiaService {
 
     @Transactional
     public MembresiaResponse create(MembresiaRequest request) {
+        log.info("Creando membresía personalizada - Miembro: {}, Tipo: {}, Fecha Inicio: {}",
+                request.getMiembroId(), request.getTipoMembresiaId(), request.getFechaInicio());
+
         // Validar que el miembro existe
         Miembro miembro = miembroRepository.findById(request.getMiembroId())
                 .orElseThrow(() -> new ResourceNotFoundException("Miembro no encontrado con ID: " + request.getMiembroId()));
@@ -59,7 +67,7 @@ public class MembresiaService {
 
         // Validar que el miembro no tenga una membresía activa
         if (miembro.tieneMembresiaActiva()) {
-            throw new BusinessException("El miembro ya tiene una membresía activa");
+            throw new BusinessException("El miembro " + miembro.getNombreCompleto() + " ya tiene una membresía activa");
         }
 
         // Obtener el usuario actual (administrador que crea la membresía)
@@ -78,6 +86,12 @@ public class MembresiaService {
                 .build();
 
         membresia = membresiaRepository.save(membresia);
+        log.info("Membresía creada exitosamente - ID: {}", membresia.getId());
+
+        // registrar pago automaticamente
+        Pago pagoRegistrado = registrarPagoAutomatico(membresia, request.getPrecioPagado(),
+                Pago.Metodopago.EFECTIVO, null, request.getNotas(), creadoPor);
+        log.info("Pago registrado automáticamente - ID: {}, Monto: {}", pagoRegistrado.getId(), pagoRegistrado.getMonto());
 
         // Crear notificación de bienvenida
         notificacionService.crearNotificacionesBienvenida(miembro, membresia);
@@ -87,6 +101,9 @@ public class MembresiaService {
 
     @Transactional
     public MembresiaResponse activateMembership(Long miembroId, Long tipoMembresiaId, BigDecimal precioPagado) {
+        log.info("Activando membresía - Miembro: {}, Tipo: {}, Precio: {}",
+                miembroId, tipoMembresiaId, precioPagado);
+
         // Validar que el miembro existe
         Miembro miembro = miembroRepository.findById(miembroId)
                 .orElseThrow(() -> new ResourceNotFoundException("Miembro no encontrado con ID: " + miembroId));
@@ -97,7 +114,7 @@ public class MembresiaService {
 
         // Validar que el miembro no tenga una membresía activa
         if (miembro.tieneMembresiaActiva()) {
-            throw new BusinessException("El miembro ya tiene una membresía activa");
+            throw new BusinessException("El miembro " + miembro.getNombreCompleto() + " ya tiene una membresía activa");
         }
 
         // Obtener el usuario actual
@@ -117,11 +134,94 @@ public class MembresiaService {
                 .build();
 
         membresia = membresiaRepository.save(membresia);
+        log.info("Membresía activada exitosamente - ID: {}", membresia.getId());
+
+        // registrar pago automaticamente
+        Pago pagoRegistrado = registrarPagoAutomatico(membresia, precioPagado,
+                Pago.Metodopago.EFECTIVO, null, "Pago por activación de membresía", creadoPor);
+        log.info("Pago registrado automáticamente - ID: {}, Monto: {}", pagoRegistrado.getId(), pagoRegistrado.getMonto());
 
         // Crear notificación de bienvenida
         notificacionService.crearNotificacionesBienvenida(miembro, membresia);
 
         return membresiaMapper.toDto(membresia);
+    }
+
+    /**
+     * metodo para registrar el pago automáticamente cuando se crea una membresía
+     */
+    private Pago registrarPagoAutomatico(Membresia membresia, BigDecimal monto,
+                                         Pago.Metodopago metodoPago, String referenciaPago,
+                                         String notas, Usuario registradoPor) {
+
+        String notasPago = notas != null ? notas :
+                String.format("Pago por activación de membresía: %s - Vence: %s",
+                        membresia.getTipoMembresia().getNombre(),
+                        membresia.getFechaFin());
+
+        Pago pago = Pago.builder()
+                .membresia(membresia)
+                .monto(monto)
+                .metodoPago(metodoPago)
+                .referenciaPago(referenciaPago)
+                .notas(notasPago)
+                .registradoPor(registradoPor)
+                .fechaPago(LocalDateTime.now())
+                .build();
+
+        return pagoRepository.save(pago);
+    }
+
+    /**
+     * metodo para registrar pagos adicionales (renovaciones, pagos parciales, etc.)
+     */
+    @Transactional
+    public Pago registrarPagoAdicional(Long membresiaId, BigDecimal monto, Pago.Metodopago metodoPago,
+                                       String referenciaPago, String notas) {
+
+        log.info("Registrando pago adicional - Membresía: {}, Monto: {}, Método: {}",
+                membresiaId, monto, metodoPago);
+
+        Membresia membresia = membresiaRepository.findById(membresiaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Membresía no encontrada con ID: " + membresiaId));
+
+        Usuario registradoPor = usuarioService.findById(1L);
+
+        Pago pago = Pago.builder()
+                .membresia(membresia)
+                .monto(monto)
+                .metodoPago(metodoPago)
+                .referenciaPago(referenciaPago)
+                .notas(notas)
+                .registradoPor(registradoPor)
+                .build();
+
+        Pago pagoGuardado = pagoRepository.save(pago);
+        log.info("Pago adicional registrado exitosamente - ID: {}", pagoGuardado.getId());
+
+        return pagoGuardado;
+    }
+
+    /**
+     * Obtener todos los pagos de una membresia
+     */
+    @Transactional(readOnly = true)
+    public List<Pago> obtenerPagosPorMembresia(Long membresiaId) {
+        Membresia membresia = membresiaRepository.findById(membresiaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Membresía no encontrada con ID: " + membresiaId));
+
+        return pagoRepository.findByMembresiaOrderByFechaPagoDesc(membresia);
+    }
+
+    /**
+     * Obtener el historial de pagos de un miembro
+     */
+    @Transactional(readOnly = true)
+    public List<Pago> obtenerHistorialPagosMiembro(Long miembroId) {
+        Miembro miembro = miembroRepository.findById(miembroId)
+                .orElseThrow(() -> new ResourceNotFoundException("Miembro no encontrado con ID: " + miembroId));
+
+        return pagoRepository.findByMembresiaMiembroOrderByFechaPagoDesc(miembro);
     }
 
     @Transactional(readOnly = true)

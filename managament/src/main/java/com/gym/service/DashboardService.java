@@ -43,11 +43,14 @@ public class DashboardService {
         response.setMembresiasVencidas(membresiaService.countExpiredMemberships());
         response.setMembresiasPorVencer(membresiaService.countExpiringMemberships());
 
-        //obtener ingresos
+        //obtener ingresos - AQUÍ ESTÁ EL PROBLEMA
         BigDecimal ingresosMes = getIngresosMesActual();
         BigDecimal ingresosAnio = getIngresosAnioActual();
         response.setIngresosMes(ingresosMes);
         response.setIngresosAnio(ingresosAnio);
+
+
+        response.setIngresosMes(getIngresosMesActual());
 
         //Obtener notificaciones
         response.setNotificacionesPendientes(notificacionService.countUnRead());
@@ -65,7 +68,7 @@ public class DashboardService {
                 .limit(5)
                 .collect(Collectors.toList()));
 
-        return  response;
+        return response;
     }
 
     private BigDecimal getIngresosMesActual(){
