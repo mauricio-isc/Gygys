@@ -1,32 +1,32 @@
 <div class="notifications-container">
-  <div class="page-header">
-    <h2>Centro de Notificaciones</h2>
+  <div class="notifications-header">
+    <h2>Notificaciones</h2>
     <div class="header-actions">
-      <button class="btn btn-outline-primary" (click)="markAllAsRead()">
+      <button class="btn btn-outline-primary me-2" (click)="onFilterChange()">
+        <i class="fas fa-sync-alt"></i> Actualizar
+      </button>
+      <button class="btn btn-outline-success me-2" (click)="markAllAsRead()" 
+              [disabled]="unreadCount === 0">
         <i class="fas fa-check-double"></i> Marcar todas como leídas
       </button>
-    </div>
-  </div>
-
-  <!-- Filter Tabs -->
-  <div class="filter-tabs mb-4">
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link" [class.active]="filter === 'all'" (click)="filter = 'all'; onFilterChange()">
+      <div class="btn-group">
+        <button class="btn btn-outline-secondary" 
+                [class.active]="filter === 'all'"
+                (click)="filter = 'all'; onFilterChange()">
           Todas
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [class.active]="filter === 'unread'" (click)="filter = 'unread'; onFilterChange()">
-          No leídas
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [class.active]="filter === 'read'" (click)="filter = 'read'; onFilterChange()">
+        </button>
+        <button class="btn btn-outline-secondary" 
+                [class.active]="filter === 'unread'"
+                (click)="filter = 'unread'; onFilterChange()">
+          No leídas <span class="badge bg-danger" *ngIf="unreadCount > 0">{{unreadCount}}</span>
+        </button>
+        <button class="btn btn-outline-secondary" 
+                [class.active]="filter === 'read'"
+                (click)="filter = 'read'; onFilterChange()">
           Leídas
-        </a>
-      </li>
-    </ul>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Loading -->
@@ -38,40 +38,39 @@
 
   <!-- Notifications List -->
   <div *ngIf="!loading" class="notifications-list">
-    <div *ngIf="notifications.length === 0" class="text-center py-5">
-      <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
-      <h4 class="text-muted">No hay notificaciones</h4>
-      <p class="text-muted">No tienes notificaciones en este momento</p>
-    </div>
-
     <div *ngFor="let notification of notifications" 
          class="notification-item" 
          [class.unread]="!notification.leida"
-         [class.read]="notification.leida">
+         (click)="markAsRead(notification)">
+      
+      <div class="notification-icon">
+        <i [class]="getNotificationIcon(notification.tipoNotificacion)"></i>
+      </div>
       
       <div class="notification-content">
-        <div class="notification-icon">
-          <i [class]="getNotificationIcon(notification.tipoNotificacion)"></i>
-        </div>
-        
-        <div class="notification-body">
-          <div class="notification-header">
-            <h6>{{ notification.titulo }}</h6>
-            <span class="notification-time">{{ getRelativeTime(notification.fechaEnvio) }}</span>
-          </div>
-          
-          <p class="notification-message">{{ notification.mensaje }}</p>
-          
-          <div class="notification-footer">
-            <span class="member-name">{{ notification.nombreMiembro }}</span>
-            <button *ngIf="!notification.leida" 
-                    class="btn btn-sm btn-link" 
-                    (click)="markAsRead(notification)">
-              Marcar como leída
-            </button>
-          </div>
-        </div>
+        <h6 class="notification-title">{{ notification.titulo }}</h6>
+        <p class="notification-message">{{ notification.mensaje }}</p>
+        <small class="notification-time text-muted">
+          {{ getRelativeTime(notification.fechaEnvio) }}
+        </small>
+      </div>
+
+      <div class="notification-status">
+        <span *ngIf="!notification.leida" class="badge bg-primary">Nueva</span>
+        <button class="btn btn-sm btn-outline-secondary" 
+                (click)="markAsRead(notification); $event.stopPropagation()">
+          <i class="fas fa-check"></i>
+        </button>
       </div>
     </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && notifications.length === 0" class="text-center py-5">
+    <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
+    <h4 class="text-muted">No hay notificaciones</h4>
+    <p class="text-muted" *ngIf="filter === 'unread'">No tienes notificaciones no leídas</p>
+    <p class="text-muted" *ngIf="filter === 'read'">No tienes notificaciones leídas</p>
+    <p class="text-muted" *ngIf="filter === 'all'">No tienes notificaciones</p>
   </div>
 </div>

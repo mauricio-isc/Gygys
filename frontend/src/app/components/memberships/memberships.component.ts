@@ -4,16 +4,19 @@ import { Membresia } from '../../models/membresia.model';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { MembershipActivationComponent } from '../membership-activate/membership-activate';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-memberships',
   templateUrl: './memberships.component.html',
   styleUrls: ['./memberships.component.scss'],
   standalone: true,
-  imports:[
+  imports: [
     CommonModule,
-    MembershipActivationComponent
-  ]
+    MembershipActivationComponent,
+    RouterModule
+]
 })
 export class MembershipsComponent implements OnInit {
   memberships: Membresia[] = [];

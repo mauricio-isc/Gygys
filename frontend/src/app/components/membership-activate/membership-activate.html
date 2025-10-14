@@ -5,26 +5,68 @@
   </div>
 
   <form (ngSubmit)="onSubmit()">
- 
+    <!-- Búsqueda de Miembro -->
     <div class="mb-3">
-      <label for="miembroSelect" class="form-label">Miembro *</label>
-      <select 
-        id="miembroSelect" 
-        class="form-select" 
-        [(ngModel)]="selectedMiembroId" 
-        name="miembroSelect"
-        [disabled]="loadingMiembros"
-        required>
-        <option value="">-- Seleccione un miembro --</option>
-        <option *ngFor="let miembro of miembros" [value]="miembro.id">
-          {{ miembro.nombre }} {{ miembro.apellido }} - {{ miembro.email }}
-        </option>
-      </select>
+      <label for="miembroSearch" class="form-label">Buscar Miembro *</label>
+      <div class="search-container">
+        <div class="input-group">
+          <input 
+            type="text" 
+            id="miembroSearch" 
+            class="form-control" 
+            [(ngModel)]="searchTerm" 
+            (input)="onSearchChange($event.target.value || '')"
+            (focus)="onFocus()"
+            (blur)="onBlur()"
+            name="miembroSearch"
+            placeholder="Buscar por nombre, apellido o email..."
+            autocomplete="off"
+            required>
+          <button *ngIf="selectedMiembro" 
+                  class="btn btn-outline-secondary" 
+                  type="button" 
+                  (click)="clearSelection()"
+                  title="Limpiar selección">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <!-- Dropdown de resultados -->
+        <div class="search-dropdown" *ngIf="showDropdown && miembrosFiltrados.length > 0">
+          <div class="dropdown-list">
+            <div *ngFor="let miembro of miembrosFiltrados" 
+                 class="dropdown-item" 
+                 (click)="selectMiembro(miembro)"
+                 [class.selected]="selectedMiembroId === miembro.id">
+              <div class="miembro-info">
+                <strong>{{ miembro.nombre }} {{ miembro.apellido }}</strong>
+                <small class="text-muted d-block">{{ miembro.email }}</small>
+                <small class="text-muted">{{ miembro.telefono || 'Sin teléfono' }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensaje de no resultados -->
+        <div *ngIf="showDropdown && searchTerm.length >= 2 && miembrosFiltrados.length === 0" 
+             class="search-no-results">
+          <div class="text-muted p-2 text-center">
+            <i class="fas fa-search me-2"></i>
+            No se encontraron miembros con "{{ searchTerm }}"
+          </div>
+        </div>
+      </div>
+      
       <div *ngIf="loadingMiembros" class="form-text text-muted">
         <i class="fas fa-spinner fa-spin"></i> Cargando miembros...
       </div>
+      <div *ngIf="!loadingMiembros" class="form-text text-muted">
+        Escribe al menos 2 caracteres para buscar miembros
+      </div>
     </div>
 
+    <!-- Resto del formulario se mantiene igual -->
+    <!-- Selección de Tipo de Membresía -->
     <div class="mb-3">
       <label for="tipoMembresiaSelect" class="form-label">Tipo de Membresía *</label>
       <select 
@@ -45,7 +87,8 @@
       </div>
     </div>
 
-    <div class="mb-4">
+    <!-- Precio Pagado -->
+    <div class="mb-3">
       <label for="precioPagado" class="form-label">Precio Pagado *</label>
       <input 
         type="number" 
@@ -62,11 +105,58 @@
       </div>
     </div>
 
- 
+    <!-- Método de Pago -->
+    <div class="mb-3">
+      <label for="metodoPago" class="form-label">Método de Pago *</label>
+      <select 
+        id="metodoPago" 
+        class="form-select" 
+        [(ngModel)]="metodoPago" 
+        name="metodoPago"
+        required>
+        <option *ngFor="let metodo of metodosPago" [value]="metodo.value">
+          {{ metodo.label }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Referencia de Pago -->
+    <div class="mb-3">
+      <label for="referenciaPago" class="form-label">Referencia de Pago</label>
+      <input 
+        type="text" 
+        id="referenciaPago" 
+        class="form-control" 
+        [(ngModel)]="referenciaPago" 
+        name="referenciaPago"
+        placeholder="Número de transacción, referencia, etc." 
+        maxlength="100">
+      <div class="form-text text-muted">
+        Opcional: Número de transacción, referencia bancaria, etc.
+      </div>
+    </div>
+
+    <!-- Notas -->
+    <div class="mb-4">
+      <label for="notas" class="form-label">Notas</label>
+      <textarea 
+        id="notas" 
+        class="form-control" 
+        [(ngModel)]="notas" 
+        name="notas"
+        placeholder="Notas adicionales sobre el pago..."
+        rows="3"
+        maxlength="500"></textarea>
+      <div class="form-text text-muted">
+        Opcional: Observaciones adicionales sobre el pago o la membresía.
+      </div>
+    </div>
+
+    <!-- Resumen -->
     <div *ngIf="isFormValid()" class="alert alert-info">
       <h6>Resumen de Activación:</h6>
-      <div *ngIf="getSelectedMiembro()">
-        <strong>Miembro:</strong> {{ getSelectedMiembro()?.nombre }} {{ getSelectedMiembro()?.apellido }}
+      <div *ngIf="selectedMiembro">
+        <strong>Miembro:</strong> {{ selectedMiembro.nombre }} {{ selectedMiembro.apellido }}
       </div>
       <div *ngIf="getSelectedTipoMembresia()">
         <strong>Membresía:</strong> {{ getSelectedTipoMembresia()?.nombre }} 
@@ -75,8 +165,18 @@
       <div>
         <strong>Precio:</strong> {{ formatCurrency(precioPagado) }}
       </div>
+      <div>
+        <strong>Método de Pago:</strong> {{ getMetodoPagoLabel(metodoPago) }}
+      </div>
+      <div *ngIf="referenciaPago">
+        <strong>Referencia:</strong> {{ referenciaPago }}
+      </div>
+      <div *ngIf="notas">
+        <strong>Notas:</strong> {{ notas }}
+      </div>
     </div>
 
+    <!-- Botones -->
     <div class="form-actions">
       <button 
         type="button" 

@@ -5,7 +5,7 @@ import { MiembroService } from '../../services/miembro.service';
 import { TipoMembresiaService } from '../../services/tipo.membresia.service';
 import { Miembro } from '../../models/miembro.model';
 import { TipoMembresia } from '../../models/tipo-membresia.model';
-
+import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-membership-activate',
@@ -19,17 +19,35 @@ export class MembershipActivationComponent implements OnInit {
   @Output() cancel = new EventEmitter<void>();
 
   miembros: Miembro[] = [];
+  miembrosFiltrados: Miembro[] = [];
   tiposMembresia: TipoMembresia[] = [];
   
   selectedMiembroId: number | null = null;
+  selectedMiembro: Miembro | null = null;
   selectedTipoMembresiaId: number | null = null;
   precioPagado: number = 0;
+  metodoPago: string = 'EFECTIVO';
+  referenciaPago: string = '';
+  notas: string = '';
+  
+  // Búsqueda
+  searchTerm: string = '';
+  showDropdown: boolean = false;
+  private searchTerms = new Subject<string>();
   
   loadingMiembros = false;
   loadingTipos = false;
   submitting = false;
 
   precioSugerido: number = 0;
+  
+  // Opciones de métodos de pago
+  metodosPago = [
+    { value: 'EFECTIVO', label: 'Efectivo' },
+    { value: 'TARJETA', label: 'Tarjeta' },
+    { value: 'TRANSFERENCIA', label: 'Transferencia' },
+    { value: 'OTRO', label: 'Otro' }
+  ];
 
   constructor(
     private miembroService: MiembroService,
@@ -37,7 +55,31 @@ export class MembershipActivationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.setupSearch();
     this.loadData();
+  }
+
+  setupSearch(): void {
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(term => {
+        if (term.length < 2) {
+          this.miembrosFiltrados = this.miembros;
+          return [];
+        }
+        return this.miembroService.searchMiembros(term);
+      })
+    ).subscribe({
+      next: (response) => {
+        this.miembrosFiltrados = response.content || response;
+        this.showDropdown = true;
+      },
+      error: (error) => {
+        console.error('Error searching miembros:', error);
+        this.miembrosFiltrados = this.miembros;
+      }
+    });
   }
 
   loadData(): void {
@@ -49,8 +91,9 @@ export class MembershipActivationComponent implements OnInit {
     this.loadingMiembros = true;
     this.miembroService.findAll().subscribe({
       next: (response) => {
-          this.miembros = response.content;
-          this.loadingMiembros = false;
+        this.miembros = response.content || response;
+        this.miembrosFiltrados = this.miembros;
+        this.loadingMiembros = false;
       },
       error: (error) => {
         console.error('Error loading miembros:', error);
@@ -71,6 +114,44 @@ export class MembershipActivationComponent implements OnInit {
         this.loadingTipos = false;
       }
     });
+  }
+
+  // Métodos de búsqueda
+  onSearchChange(term: string): void {
+    this.searchTerm = term;
+    if (term.length < 2) {
+      this.miembrosFiltrados = this.miembros;
+      this.showDropdown = true;
+      return;
+    }
+    this.searchTerms.next(term);
+  }
+
+  selectMiembro(miembro: Miembro): void {
+    this.selectedMiembro = miembro;
+    this.selectedMiembroId = miembro.id;
+    this.searchTerm = `${miembro.nombre} ${miembro.apellido} - ${miembro.email}`;
+    this.showDropdown = false;
+  }
+
+  clearSelection(): void {
+    this.selectedMiembro = null;
+    this.selectedMiembroId = null;
+    this.searchTerm = '';
+    this.miembrosFiltrados = this.miembros;
+    this.showDropdown = true;
+  }
+
+  onFocus(): void {
+    if (this.searchTerm === '' && this.miembrosFiltrados.length > 0) {
+      this.showDropdown = true;
+    }
+  }
+
+  onBlur(): void {
+    setTimeout(() => {
+      this.showDropdown = false;
+    }, 200);
   }
 
   onTipoMembresiaChange(): void {
@@ -96,7 +177,10 @@ export class MembershipActivationComponent implements OnInit {
     const activationData = {
       miembroId: this.selectedMiembroId!,
       tipoMembresiaId: this.selectedTipoMembresiaId!,
-      precioPagado: this.precioPagado
+      precioPagado: this.precioPagado,
+      metodoPago: this.metodoPago,
+      referenciaPago: this.referenciaPago || undefined,
+      notas: this.notas || undefined
     };
 
     this.membershipActivated.emit(activationData);
@@ -109,9 +193,16 @@ export class MembershipActivationComponent implements OnInit {
 
   resetForm(): void {
     this.selectedMiembroId = null;
+    this.selectedMiembro = null;
     this.selectedTipoMembresiaId = null;
     this.precioPagado = 0;
     this.precioSugerido = 0;
+    this.metodoPago = 'EFECTIVO';
+    this.referenciaPago = '';
+    this.notas = '';
+    this.searchTerm = '';
+    this.miembrosFiltrados = this.miembros;
+    this.showDropdown = false;
     this.submitting = false;
   }
 
@@ -119,10 +210,6 @@ export class MembershipActivationComponent implements OnInit {
     return !!this.selectedMiembroId && 
            !!this.selectedTipoMembresiaId && 
            this.precioPagado > 0;
-  }
-
-  getSelectedMiembro(): Miembro | undefined {
-    return this.miembros.find(m => m.id === this.selectedMiembroId);
   }
 
   getSelectedTipoMembresia(): TipoMembresia | undefined {
@@ -134,5 +221,10 @@ export class MembershipActivationComponent implements OnInit {
       style: 'currency',
       currency: 'COP'
     }).format(value);
+  }
+
+  getMetodoPagoLabel(metodo: string): string {
+    const metodoEncontrado = this.metodosPago.find(m => m.value === metodo);
+    return metodoEncontrado ? metodoEncontrado.label : metodo;
   }
 }

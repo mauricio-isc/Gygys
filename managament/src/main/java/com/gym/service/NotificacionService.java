@@ -92,6 +92,7 @@ public class NotificacionService {
                         ("¡Hola %s! Su membresia ha sido activada exitosamente. Disfrute de nuestros servicios. Su membrecia vence el %s",
                         miembro.getNombreCompleto(), membresia.getFechaFin()))
                 .build();
+        notificacionRepository.save(notificacion);
     }
 
     @Transactional
