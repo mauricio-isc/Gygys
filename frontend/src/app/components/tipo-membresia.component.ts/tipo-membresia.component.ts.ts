@@ -56,5 +56,15 @@ export class TipoMembresiaComponentTs {
     this.showForm = true;
   }
 
-
+  openEditForm(tipo: TipoMembresia): void{
+    this.editingTipo = tipo;
+    this.formData ={
+      nombre: tipo.nombre,
+      descripcion: tipo.descripcion,
+      duracionDias: tipo.duracionDias,
+      precio: tipo.precio,
+      activo: tipo.activo
+    };
+    this.showForm = true;
+  }
 }
