@@ -55,8 +55,8 @@
             </div>
           </td>
           <td>{{ membership.nombreTipoMembresia }}</td>
-          <td>{{ membership.fechaInicio | date:'shortDate' }}</td>
-          <td>{{ membership.fechaFin | date:'shortDate' }}</td>
+          <td>{{ membership.fechaInicio | date:'dd/MM/yyy' }}</td>
+          <td>{{ membership.fechaFin | date:'dd/MM/yyy' }}</td>
           <td>
             <span class="badge" [ngClass]="getStatusBadgeClass(membership.estado)">
               {{ membership.estado }}
