@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class DataInitializer {
-<<<<<<< HEAD
 /*
     TODO como recomendacion ejecutar si los datos no existen
     private final PasswordEncoder passwordEncoder;
@@ -44,9 +43,4 @@ public class DataInitializer {
 <<<<<<< HEAD
     }
     */
-=======
-
-
-    }*/
->>>>>>> origin/main
 }
