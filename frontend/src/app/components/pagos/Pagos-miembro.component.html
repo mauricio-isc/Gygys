@@ -46,7 +46,6 @@
               <th>Método</th>
               <th>Referencia</th>
               <th>Período</th>
-              <th>Registrado por</th>
               <th>Notas</th>
             </tr>
           </thead>
@@ -70,7 +69,7 @@
                 {{pago.fechaInicioMembresia | date:'dd/MM/yy'}} - 
                 {{pago.fechaFinMembresia | date:'dd/MM/yy'}}
               </td>
-              <td>{{pago.notas}}</td>
+              <td>{{pago.notas || 'sin notas'}}</td>
             </tr>
           </tbody>
         </table>

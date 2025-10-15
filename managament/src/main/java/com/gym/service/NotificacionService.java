@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,13 +85,15 @@ public class NotificacionService {
 
     @Transactional
     public void crearNotificacionesBienvenida(Miembro miembro, Membresia membresia){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaFinFormateada = membresia.getFechaFin().format(formatter);
         Notificacion notificacion = Notificacion.builder()
                 .miembro(miembro)
                 .tipoNotificacion(Notificacion.TipoNotificacion.BIENVENIDA)
                 .titulo(String.format("¡Bienvenid@ %s a nuestro gimnasio!", miembro.getNombreCompleto()))
                 .mensaje(String.format
                         ("¡Hola %s! Su membresia ha sido activada exitosamente. Disfrute de nuestros servicios. Su membrecia vence el %s",
-                        miembro.getNombreCompleto(), membresia.getFechaFin()))
+                        miembro.getNombreCompleto(), fechaFinFormateada))
                 .build();
         notificacionRepository.save(notificacion);
     }

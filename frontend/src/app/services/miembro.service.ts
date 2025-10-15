@@ -3,13 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Miembro, MiembroRequest, MiembroResponse } from '../models/miembro.model';
 
-// Interfaz de paginación
+// Interfaz de paginaciion
 export interface Page<T> {
   content: T[];
   totalElements: number;
   totalPages: number;
-  number: number; // página actual
-  size: number;   // tamaño de página
+  number: number; // pagina actual
+  size: number;   // tamaño de pagina
 }
 
 @Injectable({

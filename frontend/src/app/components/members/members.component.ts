@@ -48,6 +48,9 @@ export class MembersComponent implements OnInit {
   }
 
   searchMembers(): void {
+
+    this.currentPage = 0;
+
     if (this.searchTerm.trim()) {
       this.loading = true;
       this.miembroService.search(this.searchTerm, this.currentPage, this.pageSize).subscribe({
@@ -65,7 +68,11 @@ export class MembersComponent implements OnInit {
 
   onPageChange(page: number): void {
     this.currentPage = page;
-    this.loadMembers();
+    if(this.searchTerm.trim()){
+      this.searchMembers();
+    }else{
+      this.loadMembers();
+    }
   }
 
   deleteMember(member: Miembro): void {
