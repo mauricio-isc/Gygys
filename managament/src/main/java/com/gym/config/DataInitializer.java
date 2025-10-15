@@ -11,9 +11,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class DataInitializer {
+<<<<<<< HEAD
 /*
     TODO como recomendacion ejecutar si los datos no existen
     private final PasswordEncoder passwordEncoder;
+=======
+
+  /*  TODO ejecutalo cuando no tengas la cuenta del administrador se recomienda aqui inicializar y no en la bd
+
+       private final PasswordEncoder passwordEncoder;
+
+>>>>>>> origin/main
     @Bean
     public ApplicationRunner initUsers(UsuarioRepository userRepository) {
         return args -> {
@@ -33,6 +41,12 @@ public class DataInitializer {
                 System.out.println("ℹUsuario admin ya existe, no se crea nuevamente.");
             }
         };
+<<<<<<< HEAD
     }
     */
+=======
+
+
+    }*/
+>>>>>>> origin/main
 }

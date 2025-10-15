@@ -87,7 +87,14 @@
           <a class="page-link" (click)="onPageChange(currentPage - 1)">Anterior</a>
         </li>
 
-        
+        <li class="page-item" *ngFor="let page of pages"
+          [class.active]="page === currentPage">
+          <a class="page-link" (click)="onPageChange(page)">{{ page + 1 }}</a>
+        </li>
+
+        <li class="page-item" [class.disabled]="currentPage === pages.length - 1">
+          <a class="page-link" (click)="onPageChange(currentPage + 1)">Siguiente</a>
+        </li>
       </ul>
     </nav>
   </div>

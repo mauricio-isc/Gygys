@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -54,4 +55,9 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Long
             @Param("fechaInicio") LocalDateTime fechaInicio
     );
 
+    List<Notificacion> findByMiembroAndTipoNotificacion(
+            @Param("miembro") Miembro miembro,
+            @Param("tipoNotificacion") Notificacion.TipoNotificacion tipoNotificacion
+
+    );
 }

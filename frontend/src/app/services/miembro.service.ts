@@ -3,13 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Miembro, MiembroRequest, MiembroResponse } from '../models/miembro.model';
 
-// Interfaz de paginación
+// Interfaz de paginaciion
 export interface Page<T> {
   content: T[];
   totalElements: number;
   totalPages: number;
-  number: number; // página actual
-  size: number;   // tamaño de página
+  number: number; // pagina actual
+  size: number;   // tamaño de pagina
 }
 
 @Injectable({
@@ -26,6 +26,11 @@ export class MiembroService {
       .set('size', size.toString());
 
     return this.http.get<Page<Miembro>>(this.apiUrl, { params });
+  }
+  
+    searchMiembros(term: string): Observable<any> {
+    const params = { search: term };
+    return this.http.get(`${this.apiUrl}/search`, { params });
   }
 
   search(search: string, page:number=0, size:number=10): Observable<Page<Miembro>> {
