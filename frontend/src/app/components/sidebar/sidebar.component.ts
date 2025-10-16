@@ -36,11 +36,18 @@ export class SidebarComponent implements OnInit {
       icon: 'fas fa-id-card',
       route: '/memberships'
     },
+        {
+      title: 'Crear membresias',
+      icon: 'fa-solid fa-plus',
+      route:'/tipos-membresia'
+    },
+
     {
       title: 'Notificaciones',
       icon: 'fas fa-bell',
       route: '/notifications'
     }
+
   ];
 
   constructor(private router: Router) {}

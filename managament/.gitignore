@@ -33,4 +33,5 @@ build/
 .vscode/
 
 ### Log ###
-logs/gygys.log
+logs/
+*.log

@@ -9,6 +9,7 @@ import { MembershipsComponent } from './components/memberships/memberships.compo
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { MemberFormComponent } from './components/members/members-form.component';
 import { PagosMiembroComponent } from './components/pagos/Pagos-miembro.component';
+import { TipoMembresiaComponentTs } from './components/tipo-membresia/tipo-membresia.component.ts';
 
 export const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -20,6 +21,7 @@ export const appRoutes: Routes = [
   { path: 'members/new', component: MemberFormComponent, canActivate: [AuthGuard] },
   { path: 'members/:id', component: MemberFormComponent, canActivate: [AuthGuard] },
   { path: 'pagos/miembro/:id', component: PagosMiembroComponent, canActivate: [AuthGuard] },
+  { path: 'tipos-membresia', component: TipoMembresiaComponentTs},
   { path: '**', redirectTo: '/dashboard' },
 ];
 
