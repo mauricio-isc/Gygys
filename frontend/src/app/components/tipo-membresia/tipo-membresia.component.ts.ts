@@ -124,7 +124,7 @@ export class TipoMembresiaComponentTs {
         this.tipoMembresiaService.delete(tipo.id).subscribe({
           next: () => {
             Swal.fire('Eliminado', 'Tipo de membresia eliminada correctamente', 'success');
-            this.loadTipos;
+            this.loadTipos();
           },
           error: () =>{
             Swal.fire('Error', 'Error al eliminar el tipo de membresia', 'error');
@@ -136,6 +136,10 @@ export class TipoMembresiaComponentTs {
 
   toggleActivo(tipo: TipoMembresia): void{
     const request: Partial<TipoMembresia> ={ 
+      nombre: tipo.nombre,
+      descripcion: tipo.descripcion,
+      duracionDias:tipo.duracionDias,
+      precio: tipo.precio,
       activo: !tipo.activo
     };
 
