@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { TipoMembresiaService } from '../../services/tipo.membresia.service';
 import { TipoMembresia } from '../../models/tipo-membresia.model';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tipo-membresia.component.ts',
-  imports: [],
+  imports: [CommonModule, FormsModule, ],
   templateUrl: './tipo-membresia.component.ts.html',
   styleUrl: './tipo-membresia.component.ts.scss'
 })
