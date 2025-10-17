@@ -1,9 +1,11 @@
 <div class="sidebar" [class.sidebar-collapsed]="isCollapsed">
-  <!-- Header con botón de colapsar -->
+  <!-- Header-->
   <div class="sidebar-header">
     <div class="header-content">
       <h4 *ngIf="!isCollapsed">Menú Principal</h4>
-
+    <!--Por lo mientras lo quitare <button class="collapse-btn" (click)="toggleSideBar()" [attr.aria-label]="isCollapsed ? 'Expandir menú' : 'Colapsar menú'">
+        <i [class]="isCollapsed ? 'fas fa-chevron-right' : 'fas fa-chevron-left'"></i>
+      </button>-->
     </div>
   </div>
 
