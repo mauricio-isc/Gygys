@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   currentUser: User | null = null;
   loading = true;
 
-  // Configuración de gráficos
+  
   incomeChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
@@ -77,12 +77,50 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  updateIncomeChart(): void {
-    if (this.stats && this.stats.ingresosPorMes) {
-      this.incomeChartData.labels = this.stats.ingresosPorMes.map(item => item.mes);
-      this.incomeChartData.datasets[0].data = this.stats.ingresosPorMes.map(item => Number(item.ingreso));
-    }
+updateIncomeChart(): void {
+  console.log('Actualizando gráfica...');
+  console.log('Stats disponibles:', this.stats);
+  
+  if (this.stats && this.stats.ingresosPorMes && this.stats.ingresosPorMes.length > 0) {
+    console.log('Datos de ingresosPorMes:', this.stats.ingresosPorMes);
+    
+    // crear objetos para forzar el change detection
+    const labels = this.stats.ingresosPorMes.map(item => item.mes);
+    const data = this.stats.ingresosPorMes.map(item => Number(item.ingreso));
+    
+    this.incomeChartData = {
+      labels: labels,
+      datasets: [{
+        label: 'Ingresos Mensuales',
+        data: data,
+        backgroundColor: 'rgba(102, 126, 234, 0.8)',
+        borderColor: 'rgba(102, 126, 234, 1)',
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false,
+      }]
+    };
+    
+    console.log('Gráfica actualizada con:', { labels, data });
+    
+  } else {
+    console.warn('No hay datos para la gráfica, usando datos de ejemplo');
+    
+    // ejemplo de datos
+    this.incomeChartData = {
+      labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+      datasets: [{
+        label: 'Ingresos Mensuales',
+        data: [1200000, 1500000, 1350000, 1800000, 1600000, 1750000],
+        backgroundColor: 'rgba(102, 126, 234, 0.8)',
+        borderColor: 'rgba(102, 126, 234, 1)',
+        borderWidth: 2,
+        borderRadius: 8,
+      }]
+    };
   }
+  
+}
 
   formatCurrency(value: number): string {
     return new Intl.NumberFormat('es-CO', {

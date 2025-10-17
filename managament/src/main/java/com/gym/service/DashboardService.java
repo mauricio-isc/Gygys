@@ -38,12 +38,12 @@ public class DashboardService {
         response.setMiembrosActivos(miembroService.countActiveMembers());
         response.setMiembrosNuevosMes(miembroService.countNewMembersThisMonth());
 
-        //Estadistica de membresias
+        //estadistica de membresias
         response.setMembresiasActivas(membresiaService.countActiveMemberships());
         response.setMembresiasVencidas(membresiaService.countExpiredMemberships());
         response.setMembresiasPorVencer(membresiaService.countExpiringMemberships());
 
-        //obtener ingresos - AQUÍ ESTÁ EL PROBLEMA
+        //obtener ingresos
         BigDecimal ingresosMes = getIngresosMesActual();
         BigDecimal ingresosAnio = getIngresosAnioActual();
         response.setIngresosMes(ingresosMes);
@@ -52,7 +52,7 @@ public class DashboardService {
 
         response.setIngresosMes(getIngresosMesActual());
 
-        //Obtener notificaciones
+        //obtener notificaciones
         response.setNotificacionesPendientes(notificacionService.countUnRead());
         response.setNotificacionesLeidas(notificacionService.countRead());
 
@@ -67,7 +67,7 @@ public class DashboardService {
                 .stream()
                 .limit(5)
                 .collect(Collectors.toList()));
-
+        response.setIngresosPorMes(getIngresosPorMes());
         return response;
     }
 
@@ -91,30 +91,37 @@ public class DashboardService {
     }
 
     private List<DashboardStatsResponse.IngresoMensual> getIngresosPorMes() {
-        return IntStream.range(0, 6)
+        return IntStream.range(0, 12) //obtener los ultimos 12 meses
                 .mapToObj(i -> {
                     LocalDateTime date = LocalDateTime.now().minusMonths(i);
 
+                    //obtener ingresos al mes
                     BigDecimal ingreso = pagoRepository.sumMontoByMonthAndYear(
                             date.getMonthValue(), date.getYear()
                     );
-                    long cantidadMembresias = membresiaRepository.countByFechaCreacionAfter(
-                            date.withDayOfMonth(1).toLocalDate()
+
+                    // obtener la membresia actual del mes
+                    long cantidadMembresias = membresiaRepository.countActiveMembershipsByMonth(
+                            date.getMonthValue(), date.getYear()
                     );
 
                     DashboardStatsResponse.IngresoMensual ingresoMensual = new DashboardStatsResponse.IngresoMensual();
-                    ingresoMensual.setMes(date.format(DateTimeFormatter.ofPattern("MMM yyyy", new Locale("es"))));
+                    ingresoMensual.setMes(date.format(DateTimeFormatter.ofPattern("MMMM yyyy", new Locale("es"))));
                     ingresoMensual.setIngreso(ingreso != null ? ingreso : BigDecimal.ZERO);
                     ingresoMensual.setCantidadMembresias(cantidadMembresias);
 
                     return ingresoMensual;
                 })
-                // Orden cronológico del más antiguo al más reciente
+                // Ordenar del mas viejo al reciente
                 .sorted(Comparator.comparing(im -> {
-                    String[] parts = im.getMes().split(" ");
-                    Month month = Month.valueOf(parts[0].toUpperCase());
-                    int year = Integer.parseInt(parts[1]);
-                    return year * 100 + month.getValue();
+                    try {
+                        String mes = im.getMes();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy", new Locale("es"));
+                        LocalDateTime date = LocalDateTime.parse("01 " + mes, DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("es")));
+                        return date;
+                    } catch (Exception e) {
+                        return LocalDateTime.now();
+                    }
                 }))
                 .collect(Collectors.toList());
     }
