@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@Disabled("Contexto no levanta hasta tener BD real / seguridad")
+@Disabled("")
 class ManagamentApplicationTests {
 
 	@Test

@@ -29,7 +29,7 @@ export class TipoMembresiaService{
     }
 
     update(id: number, TipoMembresia: Partial<TipoMembresia>): Observable<TipoMembresia>{
-        return this.http.put<TipoMembresia>(`${this.apiUrl}/%{id}`, TipoMembresia);
+        return this.http.put<TipoMembresia>(`${this.apiUrl}/${id}`, TipoMembresia);
     }
 
     delete(id:number):Observable<void>{

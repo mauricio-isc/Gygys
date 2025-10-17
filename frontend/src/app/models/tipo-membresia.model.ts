@@ -5,7 +5,7 @@ export interface TipoMembresia {
   duracionDias: number;
   precio: number;
   activo: boolean;
-  fechaCreacion: Date;
+  fechaCreacion?: Date;
   duracionFormateada?: string;
 }
 

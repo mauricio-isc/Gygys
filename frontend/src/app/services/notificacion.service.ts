@@ -37,17 +37,17 @@ export class NotificacionService{
         return this.http.post<string>(`${this.apiUrl}/run-automatic`, null);
     }
 
-    getNotificationStats(): Observable<any> {
+   /* getNotificationStats(): Observable<any> {
     const token = localStorage.getItem('auth_token'); // <--- debug token
     console.log('Token being sent to /stats:', token);
 
     
-    // Incluimos el header Authorization explícitamente
+
     return this.http.get(`${this.apiUrl}/stats`, {
         headers: {
         Authorization: `Bearer ${token}`
         },
-        observe: 'response' // nos permite ver todo el response
+        observe: 'response'
     }).pipe(
         tap({
         next: (res) => console.log('Response received:', res),
@@ -55,5 +55,5 @@ export class NotificacionService{
         })
     );
     }
-
+*/
 }
