@@ -1,33 +1,133 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+<nav class="navbar navbar-expand-lg custom-navbar">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
-      <i class="fas fa-dumbbell me-2"></i>
-      Gym Management
+      <div class="brand-container">
+        <div class="brand-logo">
+          <i class="fas fa-dumbbell"></i>
+        </div>
+        <span class="brand-text">
+          <span class="brand-primary">Gym</span>
+          <span class="brand-secondary">Management</span>
+        </span>
+      </div>
     </a>
 
-    <div class="navbar-nav ms-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown">
-          <i class="fas fa-bell"></i>
-          <span *ngIf="unreadNotifications > 0" class="badge bg-danger">{{ unreadNotifications }}</span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" routerLink="/notifications">Ver todas las notificaciones</a></li>
-        </ul>
-      </li>
+    <!-- boton para movil-->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-          <i class="fas fa-user-circle me-1"></i>
-          {{ currentUser?.nombreCompleto }}
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="#">Perfil</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#" (click)="logout()">Cerrar Sesión</a></li>
-        </ul>
-      </li>
-      
+    <!--navbar-->
+    <div class="collapse navbar-collapse" id="navbarContent">
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown notification-dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+            <div class="notification-wrapper">
+              <i class="fas fa-bell"></i>
+              <span *ngIf="unreadNotifications > 0" class="notification-badge">
+                {{ unreadNotifications > 99 ? '99+' : unreadNotifications }}
+              </span>
+            </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end notification-menu">
+            <div class="notification-header">
+              <h6>Notificaciones</h6>
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary">{{ unreadNotifications }} sin leer</span>
+                <button *ngIf="unreadNotifications > 0" 
+                        class="btn btn-sm btn-outline-primary"
+                        (click)="markAllAsRead($event)">
+                  Marcar todas
+                </button>
+              </div>
+            </div>
+            <div class="notification-body">
+              <!-- carga -->
+              <div *ngIf="isLoading" class="text-center py-3">
+                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                  <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="text-muted mt-2 mb-0">Cargando notificaciones...</p>
+              </div>
+
+              <!-- notificaciones -->
+              <div *ngFor="let notification of notifications" 
+                   class="notification-item" 
+                   [class.unread]="!notification.leida"
+                   (click)="navigateFromNotification(notification, $event)">
+                <div class="notification-icon">
+                  <i [class]="getNotificationIcon(notification.tipoNotificacion)"></i>
+                </div>
+                <div class="notification-content">
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="badge badge-sm" 
+                          [ngClass]="getNotificationBadgeClass(notification.tipoNotificacion)">
+                      {{ getNotificationTypeText(notification.tipoNotificacion) }}
+                    </span>
+                    <small class="text-muted">{{ notification.nombreMiembro }}</small>
+                  </div>
+                  <p class="notification-text mb-1">{{ notification.mensaje }}</p>
+                  <small class="notification-time text-muted">
+                    {{ formatNotificationDate(notification.fechaEnvio) }}
+                  </small>
+                </div>
+                <button class="btn btn-sm btn-link mark-read-btn" 
+                        (click)="markAsRead(notification, $event)"
+                        title="Marcar como leída">
+                  <i class="fas fa-check"></i>
+                </button>
+              </div>
+
+              <!-- vacio -->
+              <div *ngIf="!isLoading && notifications.length === 0" class="text-center py-3">
+                <i class="fas fa-bell-slash text-muted mb-2" style="font-size: 2rem;"></i>
+                <p class="text-muted mb-0">No hay notificaciones nuevas</p>
+              </div>
+            </div>
+            <div class="notification-footer">
+              <a class="dropdown-item text-center" routerLink="/notifications">
+                Ver todas las notificaciones
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <!-- perfil -->
+        <li class="nav-item dropdown user-dropdown">
+          <a class="nav-link dropdown-toggle user-profile" href="#" role="button" data-bs-toggle="dropdown">
+            <div class="user-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-info d-none d-md-block">
+              <span class="user-name">{{ currentUser?.nombreCompleto || 'Usuario' }}</span>
+              <span class="user-role">Administrador</span>
+            </div>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end user-menu">
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="fas fa-user me-2"></i>
+                Mi Perfil
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="fas fa-cog me-2"></i>
+                Configuración
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item text-danger" href="#" (click)="logout($event)">
+                <i class="fas fa-sign-out-alt me-2"></i>
+                Cerrar Sesión
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

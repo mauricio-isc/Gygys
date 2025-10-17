@@ -93,8 +93,10 @@ updateIncomeChart(): void {
       datasets: [{
         label: 'Ingresos Mensuales',
         data: data,
-        backgroundColor: 'rgba(102, 126, 234, 0.8)',
-        borderColor: 'rgba(102, 126, 234, 1)',
+       // backgroundColor: 'rgba(102, 126, 234, 0.8)',
+        backgroundColor: 'rgba(47, 168, 148, 0.93)',
+       // borderColor: 'rgba(102, 126, 234, 1)',
+        borderColor: 'rgba(47, 168, 148, 0.93)',
         borderWidth: 2,
         borderRadius: 8,
         borderSkipped: false,

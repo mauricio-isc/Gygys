@@ -1,17 +1,55 @@
-<div class="sidebar">
+<div class="sidebar" [class.sidebar-collapsed]="isCollapsed">
+  <!-- Header con botón de colapsar -->
   <div class="sidebar-header">
-    <h4>Menú Principal</h4>
+    <div class="header-content">
+      <h4 *ngIf="!isCollapsed">Menú Principal</h4>
+
+    </div>
   </div>
-  
-  <ul class="sidebar-menu">
-    <li *ngFor="let item of menuItems" 
-        class="menu-item" 
+
+  <!-- Menú de navegación -->
+  <nav class="sidebar-nav">
+    <ul class="sidebar-menu">
+      <li
+        *ngFor="let item of menuItems"
+        class="menu-item"
         [class.active]="item.active"
-        (click)="navigateTo(item.route)">
-      <a class="menu-link">
-        <i [class]="item.icon"></i>
-        <span>{{ item.title }}</span>
-      </a>
-    </li>
-  </ul>
+        [class.has-notification]="item.hasNotification"
+        (click)="navigateTo(item.route)"
+        [title]="isCollapsed ? item.title : ''"
+      >
+        <a class="menu-link" [attr.aria-current]="item.active ? 'page' : null">
+          <div class="menu-icon">
+            <i [class]="item.icon"></i>
+            <span class="notification-badge" *ngIf="item.hasNotification"></span>
+          </div>
+          <span class="menu-text" [class.collapsed]="isCollapsed">{{ item.title }}</span>
+          <i class="menu-arrow fas fa-chevron-right" *ngIf="item.submenu && !isCollapsed"></i>
+        </a>
+
+        <!-- Submenú (opcional) -->
+        <ul class="submenu" *ngIf="item.submenu && !isCollapsed">
+          <li *ngFor="let subItem of item.submenu" class="submenu-item">
+            <a (click)="navigateTo(subItem.route)">{{ subItem.title }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Footer del sidebar -->
+  <div class="sidebar-footer" *ngIf="!isCollapsed">
+    <div class="user-info">
+      <div class="user-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="user-details">
+        <span class="user-name">Usuario</span>
+        <span class="user-role">Administrador</span>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- Overlay para mobile -->
+<div class="sidebar-overlay" *ngIf="isMobileOpen" (click)="closeMobileSideBar()"></div>
