@@ -1,11 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { MembresiaService } from '../../services/membresia.service';
+import { MiembroService } from '../../services/miembro.service';
 import { Membresia } from '../../models/membresia.model';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { MembershipActivationComponent } from '../membership-activate/membership-activate';
 import { RouterModule } from '@angular/router';
+import { Miembro } from '../../models/miembro.model';
+import { FormsModule } from '@angular/forms';
 
+export interface Page<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
 
 @Component({
   selector: 'app-memberships',
@@ -15,15 +25,22 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     MembershipActivationComponent,
+    FormsModule,
     RouterModule
 ]
 })
+
 export class MembershipsComponent implements OnInit {
   memberships: Membresia[] = [];
   loading = false;
   showActivationModal = false;
-
-  constructor(private membresiaService: MembresiaService) {}
+  members: Miembro[] = [];
+  searchTerm = '';
+  currentPage = 0;
+  pageSize = 10;
+  totalElements = 0;
+  
+  constructor(private membresiaService: MembresiaService, private miembroService: MiembroService) {}
 
   ngOnInit(): void {
     this.loadMemberships();
@@ -113,4 +130,38 @@ export class MembershipsComponent implements OnInit {
         return 'bg-secondary';
     }
   }
+
+searchMembers(): void {
+  this.currentPage = 0;
+
+  if (this.searchTerm.trim()) {
+    this.loading = true;
+    this.miembroService.search(this.searchTerm, this.currentPage, this.pageSize).subscribe({
+      next: (response: Page<Miembro>) => {
+        console.log('Resultados de búsqueda:', response);
+        this.members = response.content; // ✅ correcto
+        this.totalElements = response.totalElements;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error en búsqueda:', error);
+        this.loading = false;
+      }
+    });
+  } else {
+    this.loadMembers();
+  }
+}
+
+      loadMembers(): void {
+        this.loading = true;
+        this.miembroService.findAll(this.currentPage, this.pageSize).subscribe({
+          next: (response: Page<Miembro>) => {
+            this.members = response.content;
+            this.totalElements = response.totalElements;
+            this.loading = false;
+          },
+          error: () => (this.loading = false)
+        });
+      }
 }

@@ -1,0 +1,180 @@
+
+<div class="container-fluid">
+  <!--Header-->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+      <i class="fas fa-id-card me-2"></i>
+      Tipos de Membresía
+    </h2>
+    <button class="btn btn-success" (click)="openCreateForm()">
+      <i class="fas fa-plus me-1"></i> Crear membresía
+    </button>
+  </div>
+
+  <!--cargando -->
+  <div *ngIf="loading" class="text-center py-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">Cargando tipos de membresía...</p>
+  </div>
+
+  <!--Tabla tipos-->
+  <div *ngIf="!loading" class="card">
+    <div class="card-header">
+      <h5 class="card-title mb-0">Lista de Tipos de Membresía</h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Duración</th>
+              <th>Precio</th>
+              <th>Estado</th>
+              <th>Fecha Creación</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tipo of tipos">
+              <td>
+                <strong>{{tipo.nombre}}</strong>
+              </td>
+              <td>{{tipo.descripcion || 'Sin descripción'}}</td>
+              <td>{{tipo.duracionDias}} días</td>
+              <td>
+                <strong>$ {{tipo.precio | number}}</strong>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="tipo.activo ? 'bg-success' : 'bg-secondary'">
+                  {{tipo.activo ? 'Activo' : 'Inactivo'}}
+                </span>
+              </td>
+              <td>{{tipo.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</td>
+              <td>
+                <div class="btn-group btn-group-sm">
+                  <button class="btn btn-warning" (click)="openEditForm(tipo)" title="Editar">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn" 
+                          [ngClass]="tipo.activo ? 'btn-secondary' : 'btn-success'" 
+                          (click)="toggleActivo(tipo)"
+                          [title]="tipo.activo ? 'Desactivar' : 'Activar'">
+                    <i class="fas" [ngClass]="tipo.activo ? 'fa-times' : 'fa-check'"></i>
+                  </button>
+                  <button class="btn btn-danger" (click)="deleteTipo(tipo)" title="Eliminar">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!--Mensaje -->
+      <div *ngIf="tipos.length === 0" class="text-center py-4">
+        <i class="fas fa-id-card fa-3x text-muted mb-3"></i>
+        <p class="text-muted">No hay tipos de membresía registrados</p>
+        <button class="btn btn-primary" (click)="openCreateForm()">
+          <i class="fas fa-plus me-1"></i> Crear Primer Tipo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal form -->
+  <div *ngIf="showForm" class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-id-card me-2"></i>
+            {{editingTipo ? 'Editar' : 'Nuevo'}} Tipo de Membresía
+          </h5>
+          <button type="button" class="btn-close" (click)="closeForm()"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmit()" #tipoForm="ngForm">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Nombre *</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="formData.nombre" 
+                       name="nombre" 
+                       required
+                       maxlength="50"
+                       placeholder="Ej: Mensual, Anual, Premium">
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Precio *</label>
+                <input type="number" class="form-control" 
+                       [(ngModel)]="formData.precio" 
+                       name="precio" 
+                       required
+                       min="1"
+                       step="0.01"
+                       placeholder="0.00">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Duración (días) *</label>
+                <input type="number" class="form-control" 
+                       [(ngModel)]="formData.duracionDias" 
+                       name="duracionDias" 
+                       required
+                       min="1"
+                       placeholder="30">
+                <div class="form-text">
+                  Duración en días: 
+                  <span class="text-primary">
+                    {{formData.duracionDias}} días 
+                    ({{formData.duracionDias / 30 | number:'1.1-1'}} meses)
+                  </span>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Estado</label>
+                <div class="form-check form-switch mt-2">
+                  <input class="form-check-input" type="checkbox" 
+                         [(ngModel)]="formData.activo" 
+                         name="activo"
+                         id="activoSwitch">
+                  <label class="form-check-label" for="activoSwitch">
+                    {{formData.activo ? 'Activo' : 'Inactivo'}}
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Descripción</label>
+              <textarea class="form-control" 
+                        [(ngModel)]="formData.descripcion" 
+                        name="descripcion"
+                        rows="3"
+                        maxlength="500"
+                        placeholder="Descripción del tipo de membresía..."></textarea>
+              <div class="form-text">{{formData.descripcion?.length || 0}}/500 caracteres</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeForm()">Cancelar</button>
+          <button type="button" class="btn btn-primary" 
+                  (click)="onSubmit()" 
+                  [disabled]="!formData.nombre || !formData.precio || !formData.duracionDias">
+            {{editingTipo ? 'Actualizar' : 'Crear'}} Tipo
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

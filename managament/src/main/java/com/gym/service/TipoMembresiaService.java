@@ -64,11 +64,10 @@ public class TipoMembresiaService {
     public void deleteById(Long id) {
         TipoMembresia tipoMembresia = tipoMembresiaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Tipo de membresía no encontrado con ID: " + id));
-        tipoMembresia.setActivo(false); // Eliminación lógica
-        tipoMembresiaRepository.save(tipoMembresia);
+        tipoMembresiaRepository.deleteById(id);
     }
 
-    // Método para usar con la entidad directamente (si lo necesitas)
+
     @Transactional
     public TipoMembresia saveEntity(TipoMembresia tipoMembresia) {
         return tipoMembresiaRepository.save(tipoMembresia);
