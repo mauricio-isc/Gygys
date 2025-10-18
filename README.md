@@ -3,8 +3,6 @@
 
 Proyecto fullstack con **Angular** y *Spring boot* 
 
-
-![Login del gimnacio](./docs/images/login.png) 
 Vista del login
 <p align="center">
   <img src="./docs/images/login.png" width="700" alt="Dashboard del sistema">
