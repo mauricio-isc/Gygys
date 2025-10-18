@@ -1,11 +1,11 @@
-2025-10-17 22:20:38 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/unread
-2025-10-17 22:20:38 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/unread
-2025-10-17 22:20:38 [http-nio-8080-exec-4] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
-2025-10-17 22:20:38 [http-nio-8080-exec-4] WARN  c.g.security.JwtAuthenticationFilter - JWT Filter - No Bearer token
-2025-10-17 22:20:38 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-10-17 22:20:38 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/unread
-2025-10-17 22:20:38 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/unread", parameters={}
-2025-10-17 22:20:38 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#findUnread()
-2025-10-17 22:20:38 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2025-10-17 22:20:38 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[NotificacionResponse(id=24, miembroId=17, nombreMiembro=mauri nava, tipoNotificacion=BIENVENIDA, ti (truncated)...]
-2025-10-17 22:20:38 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-17 22:30:07 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /notifications/unread
+2025-10-17 22:30:07 [http-nio-8080-exec-6] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - URI: /api/notifications/unread
+2025-10-17 22:30:07 [http-nio-8080-exec-6] INFO  c.g.security.JwtAuthenticationFilter - JWT Filter - Validating token
+2025-10-17 22:30:07 [http-nio-8080-exec-6] WARN  c.g.security.JwtAuthenticationFilter - JWT Filter - No Bearer token
+2025-10-17 22:30:07 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-10-17 22:30:07 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /notifications/unread
+2025-10-17 22:30:07 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/notifications/unread", parameters={}
+2025-10-17 22:30:07 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.gym.controller.NotificacionController#findUnread()
+2025-10-17 22:30:07 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2025-10-17 22:30:07 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[NotificacionResponse(id=24, miembroId=17, nombreMiembro=mauri nava, tipoNotificacion=BIENVENIDA, ti (truncated)...]
+2025-10-17 22:30:07 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
