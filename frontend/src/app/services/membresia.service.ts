@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Membresia, MembresiaRequest, ActivateMembershipRequest } from "../models/membresia.model";
+import { Page } from "./miembro.service";
 
 @Injectable({
     providedIn: 'root'
@@ -46,5 +47,6 @@ export class MembresiaService {
     updateMembershipStatus(): Observable<void> {
         return this.http.post<void>(`${this.apiUrl}/update-status`, null);
     }
+
 
 }

@@ -51,6 +51,9 @@
       <textarea class="form-control" [(ngModel)]="selectedMember.notas" name="notas"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-success">{{ selectedMember.id ? 'Actualizar' : 'Crear' }}</button>
+    <button type="submit" class="btn btn-success">
+      <span class="btn-icon"></span>
+     <span> {{ selectedMember.id ? 'Actualizar' : 'Crear' }}</span>
+    </button>
   </form>
 </div>

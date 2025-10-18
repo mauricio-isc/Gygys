@@ -1,129 +1,408 @@
 .member-form-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    background-color: #2c3e50;
-    border-radius: 12px;
-    border: 1px solid #2c3e50;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e1e5e9;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  overflow: hidden;
 
-    h2 {
-        color: #747b8b;
-        text-align: center;
-        font-size: 1.5rem;
+  h2 {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    letter-spacing: -0.25px;
+    border-bottom: 1px solid #e1e5e9;
+  }
+
+  form {
+    padding: 2rem;
+
+    // Layout de grid para formulario profesional
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+
+    .mb-3 {
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+
+      &:nth-child(1) { grid-column: 1; } // Nombre
+      &:nth-child(2) { grid-column: 2; } // Apellido
+      &:nth-child(3) { grid-column: 1 / span 2; } // Email (full width)
+      &:nth-child(4) { grid-column: 1; } // Teléfono
+      &:nth-child(5) { grid-column: 2; } // Documento
+      &:nth-child(6) { grid-column: 1; } // Género
+      &:nth-child(7) { grid-column: 2; } // Fecha Nacimiento
+      &:nth-child(8) { grid-column: 1 / span 2; } // Dirección (full width)
+      &:nth-child(9) { grid-column: 1 / span 2; } // Notas (full width)
+      &:nth-child(10) { grid-column: 1 / span 2; } // Botón (full width)
+
+      .form-label {
+        color: #2c3e50;
+        font-size: 0.875rem;
         font-weight: 600;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0.5rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        
+        &::after {
+          content: '*';
+          color: #e74c3c;
+          margin-left: 4px;
+          opacity: 0;
+        }
+      }
+
+      // Mostrar asterisco en campos requeridos
+      &:has(input[required]) .form-label::after,
+      &:has(select[required]) .form-label::after,
+      &:has(textarea[required]) .form-label::after {
+        opacity: 1;
+      }
+
+      .form-control,
+      .form-select {
+        background: #f8f9fa;
+        border: 1.5px solid #e1e5e9;
+        border-radius: 6px;
+        color: #2c3e50;
+        padding: 0.75rem 1rem;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        width: 100%;
+        min-height: 48px;
+
+        &::placeholder {
+          color: #8a94a6;
+          font-weight: 400;
+        }
+
+        &:focus {
+          background: #ffffff;
+          border-color: #3498db;
+          box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+          outline: none;
+        }
+
+        &:hover {
+          border-color: #bdc3c7;
+        }
+
+        // Estados de validación
+        &.ng-invalid.ng-touched {
+          border-color: #e74c3c;
+          box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+
+        &.ng-valid.ng-touched {
+          border-color: #27ae60;
+          box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+        }
+      }
+
+      // Estilos específicos para textarea
+      textarea.form-control {
+        resize: vertical;
+        min-height: 80px;
+        line-height: 1.5;
+        font-family: inherit;
+
+        &:focus {
+          min-height: 100px;
+        }
+      }
+
+      // Estilos específicos para select
+      .form-select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%236c757d' viewBox='0 0 16 16'%3e%3cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3e%3c/svg%3e");
+        background-position: right 1rem center;
+        background-repeat: no-repeat;
+        background-size: 14px 10px;
+        padding-right: 2.5rem;
+        appearance: none;
+
+        &:focus {
+          background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%233498db' viewBox='0 0 16 16'%3e%3cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3e%3c/svg%3e");
+        }
+      }
+    }
+
+    // Botón rojo profesional
+    .btn-success {
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      padding: 0.875rem 2rem;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      min-height: 50px;
+      cursor: pointer;
+
+      // Contenedor del icono
+      .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        position: relative;
+        
+        // Lápiz (estado normal)
+        &::before {
+          content: '✏️';
+          font-size: 1rem;
+          transition: all 0.3s ease;
+          position: absolute;
+        }
+        
+        // Check (aparece en hover)
+        &::after {
+          content: '✅';
+          font-size: 1rem;
+          position: absolute;
+          opacity: 0;
+          transform: scale(0) rotate(-180deg);
+          transition: all 0.4s ease;
+        }
+      }
+
+      &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(231, 76, 60, 0.4);
+        background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+        
+        .btn-icon::before {
+          opacity: 0;
+          transform: scale(0) rotate(180deg);
+        }
+        
+        .btn-icon::after {
+          opacity: 1;
+          transform: scale(1) rotate(0deg);
+          animation: success-bounce 0.6s ease;
+        }
+
+        span:last-child {
+          transform: translateX(2px);
+        }
+      }
+
+      span:last-child {
+        transition: transform 0.3s ease;
+        font-weight: 600;
+      }
+
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(231, 76, 60, 0.4);
+      }
+
+      &:disabled {
+        background: #bdc3c7;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+        opacity: 0.6;
+        
+        .btn-icon::before,
+        .btn-icon::after {
+          animation: none;
+        }
+      }
+
+      // Efecto de pulso al cargar
+      &.loading {
+        position: relative;
+        overflow: hidden;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+          animation: shimmer 1.5s infinite;
+        }
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes success-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-3px) scale(1.1);
+  }
+  60% {
+    transform: translateY(-1px) scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+// Animaciones de entrada para los campos
+.member-form-container form .mb-3 {
+  animation: slideInUp 0.4s ease-out forwards;
+  opacity: 0;
+  transform: translateY(15px);
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.05}s;
+    }
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .member-form-container {
+    margin: 1rem;
+    border-radius: 6px;
+
+    h2 {
+      padding: 1.25rem 1.5rem;
+      font-size: 1.25rem;
     }
 
     form {
-        .mb-3 {
-            margin-bottom: 1rem !important;
+      padding: 1.5rem;
+      grid-template-columns: 1fr;
+      gap: 1rem;
 
-            .form-label {
-                color: #e1e5e9;
-                font-weight: 500;
-                margin-bottom: 0.4rem;
-                text-transform: uppercase;
-                letter-spacing: 0.3px;
-            }
+      .mb-3 {
+        grid-column: 1 !important;
 
-            .form-control,
-            .form-select {
-                background: #2a2e35;
-                border: 1px solid #3a3f47;
-                border-radius: 6px;
-                color: #ffffff;
-                padding: 0.5rem 0.75rem;
-                font-size: 0.9rem;
-                transition: all 0.2s ease;
-
-                &:focus {
-                    background: #2f333b;
-                    border-color: #2563eb;
-                    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
-                    outline: none;
-                }
-
-                &::placeholder {
-                    color: #8a8f98;
-                }
-            }
-
-
-            textarea.form-control {
-                min-height: 70px;
-                resize: vertical;
-            }
-
-            .form-select {
-                cursor: pointer;
-                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%238a8f98' viewBox='0 0 16 16'%3e%3cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3e%3c/svg%3e");
-            }
+        .form-control,
+        .form-select {
+          padding: 0.675rem 0.875rem;
+          font-size: 0.9rem;
+          min-height: 44px;
         }
+      }
 
-        .btn {
-            width: 100%;
-            background: #2563eb;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.2s ease;
-            margin-top: 0.5rem;
-
-            &:hover {
-                background: #3b78f0;
-                transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            }
-
-            &:active {
-                transform: translateY(0);
-            }
-        }
+      .btn-success {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+        min-height: 46px;
+      }
     }
+  }
 }
 
+@media (max-width: 480px) {
+  .member-form-container {
+    margin: 0.5rem;
 
-@media (max-width: 768px){
-    .member-form-container{
-        margin: 0.5rem;
-        padding: 1rem;
+    h2 {
+      padding: 1rem 1.25rem;
+      font-size: 1.125rem;
+    }
 
-        h2{
-            font-size: 1.3rem;
-            margin-bottom: 1.2rem;
+    form {
+      padding: 1.25rem 1rem;
+      gap: 0.875rem;
+
+      .mb-3 {
+        .form-label {
+          font-size: 0.8125rem;
         }
 
-        form{
-            .mb-3{
-                .form-control,
-                .form-select{
-                    padding: 0.45rem 0.65rem;
-                    font-size: 0.85rem;
-                }
-            }
+        .form-control,
+        .form-select {
+          padding: 0.625rem 0.75rem;
+          font-size: 0.875rem;
+          min-height: 42px;
         }
+      }
     }
+  }
 }
 
-@keyframes fadeInUp {
-    from{
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
+// Estados de focus mejorados para accesibilidad
+.form-control:focus,
+.form-select:focus,
+.btn-success:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
 }
 
-.member-form-container{
-    animation: fadeInUp 0.3s ease-out;
+// Efectos de transición suave
+.member-form-container * {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Modo de movimiento reducido
+@media (prefers-reduced-motion: reduce) {
+  .member-form-container * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+// Validación visual mejorada
+.form-control.ng-invalid.ng-touched {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23e74c3c'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.8 3.6.4.4.4-.4'/%3e%3cpath d='M6 7v2'/%3e%3c/svg%3e");
+  background-position: right 1rem center;
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  padding-right: 2.5rem;
+}
+
+.form-control.ng-valid.ng-touched {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%2327ae60'%3e%3cpath d='M3 7l2 2 4-4'/%3e%3c/svg%3e");
+  background-position: right 1rem center;
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  padding-right: 2.5rem;
+}
+
+// Indicadores de carga para campos
+.form-control:disabled {
+  background-color: #f8f9fa;
+  opacity: 0.7;
+  cursor: not-allowed;
 }
