@@ -4,7 +4,7 @@
     <div class="row align-items-center">
       <div class="col-md-8">
         <h1>Dashboard</h1>
-        <p class="text-muted">Bienvenido, {{ currentUser?.nombreCompleto }}</p>
+     <!--   <p class="text-muted">Bienvenido, {{ currentUser?.nombreCompleto }}</p>-->
       </div>
       <div class="col-md-4 text-end">
         <button class="btn btn-outline-primary" (click)="refreshData()">
@@ -167,7 +167,7 @@
               <div class="recent-item-info">
                 <h6>{{ membership.nombreMiembro }}</h6>
                 <p class="text-muted">
-                  Vence: {{ membership.fechaFin | date:'shortDate' }}
+                  Vence: {{ membership.fechaFin | date:'dd/MM/yyy'  }}
                   ({{ membership.diasRestantes }} días)
                 </p>
               </div>

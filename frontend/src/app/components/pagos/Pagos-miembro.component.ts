@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule, DatePipe, DecimalPipe, NgIf, NgFor, NgClass } from '@angular/common';
 import { PagoService, PagoDetalle } from '../../services/pago.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-pagos-miembro',
   standalone: true,
   imports: [
+    RouterModule,
     CommonModule, 
     NgIf,
     NgFor,
@@ -24,7 +26,8 @@ export class PagosMiembroComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private pagoService: PagoService
+    private pagoService: PagoService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -48,5 +51,9 @@ export class PagosMiembroComponent implements OnInit {
 
   getTotalPagos(): number {
     return this.pagos.reduce((total, pago) => total + pago.monto, 0);
+  }
+
+  volver():void{
+    this.location.back();
   }
 }

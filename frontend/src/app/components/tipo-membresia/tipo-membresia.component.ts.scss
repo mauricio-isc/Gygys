@@ -285,7 +285,7 @@ $border-color: #bdc3c7;
   }
   
   .modal-dialog {
-    margin: 2rem auto;
+    margin: 9rem auto;
     
     .modal-content {
       border: none;
@@ -294,7 +294,7 @@ $border-color: #bdc3c7;
       overflow: hidden;
       
       .modal-header {
-        background: linear-gradient(135deg, $primary-color, #2980b9);
+        background: linear-gradient(135deg, #1a1a1a 0%, #e74c3c 100%);
         border-bottom: none;
         padding: 1.5rem 2rem;
         
