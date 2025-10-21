@@ -36,12 +36,10 @@ public class Membresia {
     private TipoMembresia tipoMembresia;
 
     @NotNull(message = "La fecha de inicio es requerida")
-    @FutureOrPresent(message = "La fecha de inicio no puede ser en el pasado")
     @Column(name = "fecha_inicio", nullable = false)
     private LocalDate fechaInicio;
 
     @NotNull(message = "La fecha de fin es requerida")
-    @Future(message = "La fecha de fin debe ser en el futuro")
     @Column(name = "fecha_fin", nullable = false)
     private LocalDate fechaFin;
 

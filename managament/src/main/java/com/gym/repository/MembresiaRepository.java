@@ -62,4 +62,7 @@ public interface MembresiaRepository extends JpaRepository<Membresia, Long> {
      @Query("SELECT COUNT(m) FROM Membresia m WHERE MONTH(m.fechaInicio) = :month AND YEAR(m.fechaInicio) = :year AND m.estado = 'ACTIVA'")
     long countActiveMembershipsByMonth(@Param("month") int month, @Param("year") int year);
 
+    @Query("SELECT m FROM Membresia m WHERE m.estado = com.gym.entity.Membresia.EstadoMembresia.ACTIVA AND m.fechaFin IS NOT NULL AND m.fechaFin < :hoy")
+    List<Membresia> findMembresiasVencidas(@Param("hoy") LocalDate hoy);
+
 }

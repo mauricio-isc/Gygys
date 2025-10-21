@@ -287,46 +287,42 @@ public class MembresiaService {
                 return membresiaRepository.countProximasAVencer(fechaInicio, fechaFin);
         }
 
-        @Transactional
-        public void updateMembershipStatus() {
-                // Actualizar membresías vencidas
-                List<Membresia> vencidas = membresiaRepository.findVencidas(LocalDate.now());
+    @Transactional
+    public void updateMembershipStatus() {
+        LocalDate hoy = LocalDate.now();
+        log.info("=== INICIANDO ACTUALIZACIÓN DE MEMBRESÍAS ===");
+        log.info("Fecha de referencia: {}", hoy);
 
-                for (Membresia membresia : vencidas) {
-                        if (membresia.getEstado() == Membresia.EstadoMembresia.ACTIVA) {
-                                membresia.setEstado(Membresia.EstadoMembresia.VENCIDA);
-                                membresiaRepository.save(membresia);
+        try {
+            List<Membresia> membresiasVencidas = membresiaRepository.findMembresiasVencidas(hoy);
 
-                                // Crear notificación de vencimiento
-                                notificacionService.crearNotificacionVencimiento(membresia.getMiembro(), membresia);
-                        }
-                }
+            log.info("Membresías vencidas encontradas: {}", membresiasVencidas.size());
+
+            for (Membresia membresia : membresiasVencidas) {
+                log.info("Procesando ID: {} - Estado: {} - Fecha fin: {}",
+                        membresia.getId(), membresia.getEstado(), membresia.getFechaFin());
+
+                // Actualizar estado
+                membresia.setEstado(Membresia.EstadoMembresia.VENCIDA);
+                membresiaRepository.save(membresia);
+
+                log.info("✅ Membresía ID: {} actualizada a VENCIDA", membresia.getId(), Membresia.EstadoMembresia.VENCIDA);
+            }
+
+            log.info("=== ACTUALIZACIÓN COMPLETADA ===");
+            log.info("Total de membresías actualizadas: {}", membresiasVencidas.size());
+
+        } catch (Exception e) {
+            log.error("❌ Error en actualización de membresías: {}", e.getMessage(), e);
+            throw e;
         }
-
-        @Transactional(readOnly = true)
-        public Membresia findEntityById(Long id) {
-                return membresiaRepository.findById(id)
-                                .orElseThrow(() -> new ResourceNotFoundException(
-                                                "Membresía no encontrada con ID: " + id));
-        }
-
+    }
 
     @Transactional(readOnly = true)
-    public void diagnosticarMembresiaVencida() {
-        LocalDate hoy = LocalDate.now();
-        System.out.println("=== DIAGNÓSTICO VENCIMIENTOS ===");
-        System.out.println("Fecha actual: " + hoy);
-
-        // Test el query corregido
-        List<Membresia> vencidas = membresiaRepository.findVencidas(hoy);
-        System.out.println("Membresías vencidas encontradas: " + vencidas.size());
-
-        for (Membresia m : vencidas) {
-            System.out.println("ID: " + m.getId() +
-                    ", Miembro: " + m.getMiembro().getNombreCompleto() +
-                    ", Fecha Fin: " + m.getFechaFin() +
-                    ", Estado: " + m.getEstado());
-        }
-        System.out.println("================================");
+    public Membresia findEntityById(Long id) {
+            return membresiaRepository.findById(id)
+                            .orElseThrow(() -> new ResourceNotFoundException(
+                                            "Membresía no encontrada con ID: " + id));
     }
+
 }
