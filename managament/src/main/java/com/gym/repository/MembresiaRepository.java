@@ -18,7 +18,7 @@ public interface MembresiaRepository extends JpaRepository<Membresia, Long> {
 
     List<Membresia> findByEstado(Membresia.EstadoMembresia estado);
 
-    @Query("SELECT m FROM Membresia m WHERE m.estado = 'ACTIVA' AND m.fechaFin <:fecha")
+    @Query("SELECT m FROM Membresia m WHERE m.estado = 'ACTIVA' AND m.fechaFin < :fecha")
     List<Membresia> findVencidas(@Param("fecha")LocalDate fecha);
 
     @Query("SELECT m FROM Membresia m WHERE m.estado = 'ACTIVA' AND m.fechaFin BETWEEN :fechaInicio AND :fechaFin")

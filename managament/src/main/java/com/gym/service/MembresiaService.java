@@ -133,7 +133,7 @@ public class MembresiaService {
 
                 // Calcular fechas
                 LocalDate fechaInicio = LocalDate.now();
-                LocalDate fechaFin = fechaInicio.plusDays(tipoMembresia.getDuracionDias());
+                LocalDate fechaFin = fechaInicio.plusDays(tipoMembresia.getDuracionDias()).minusDays(1);
 
                 Membresia membresia = Membresia.builder()
                                 .miembro(miembro)
@@ -309,4 +309,24 @@ public class MembresiaService {
                                 .orElseThrow(() -> new ResourceNotFoundException(
                                                 "Membresía no encontrada con ID: " + id));
         }
+
+
+    @Transactional(readOnly = true)
+    public void diagnosticarMembresiaVencida() {
+        LocalDate hoy = LocalDate.now();
+        System.out.println("=== DIAGNÓSTICO VENCIMIENTOS ===");
+        System.out.println("Fecha actual: " + hoy);
+
+        // Test el query corregido
+        List<Membresia> vencidas = membresiaRepository.findVencidas(hoy);
+        System.out.println("Membresías vencidas encontradas: " + vencidas.size());
+
+        for (Membresia m : vencidas) {
+            System.out.println("ID: " + m.getId() +
+                    ", Miembro: " + m.getMiembro().getNombreCompleto() +
+                    ", Fecha Fin: " + m.getFechaFin() +
+                    ", Estado: " + m.getEstado());
+        }
+        System.out.println("================================");
+    }
 }
