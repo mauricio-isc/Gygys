@@ -20,9 +20,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> authenticate(@Valid @RequestBody AuthRequest request) {
-        log.info("🔐 AuthController - ENTRADA - username: {}", request.getUsername());
+        log.info("AuthController - ENTRADA - username: {}", request.getUsername());
         AuthResponse response = authenticationService.authenticate(request);
-        log.info("✅ AuthController - SALIDA - username: {}", request.getUsername());
+        log.info("AuthController - SALIDA - username: {}", request.getUsername());
         return ResponseEntity.ok(response);
     }
 

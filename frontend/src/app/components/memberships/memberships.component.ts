@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MembresiaService } from '../../services/membresia.service';
 import { MiembroService } from '../../services/miembro.service';
 import { Membresia } from '../../models/membresia.model';
-import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { MembershipActivationComponent } from '../membership-activate/membership-activate';
 import { RouterModule } from '@angular/router';
 import { Miembro } from '../../models/miembro.model';
 import { FormsModule } from '@angular/forms';
+import { CustomAlertService } from '../../services/custom-alert.service';
 
 export interface Page<T> {
   content: T[];
@@ -40,7 +40,9 @@ export class MembershipsComponent implements OnInit {
   pageSize = 10;
   totalElements = 0;
   
-  constructor(private membresiaService: MembresiaService, private miembroService: MiembroService) {}
+  constructor(private membresiaService: MembresiaService, 
+    private miembroService: MiembroService,
+    private customAlertService: CustomAlertService) {}
 
   ngOnInit(): void {
     this.loadMemberships();
@@ -86,23 +88,19 @@ export class MembershipsComponent implements OnInit {
     ).subscribe({
       next: (membresia) => {
         this.showActivationModal = false; 
-        Swal.fire({
-          title: '¡Membresia Activada!',
-          text: `La membresia ha sido activada exitosamente para el usuario ${membresia.nombreMiembro}`,
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        });
+        this.customAlertService.showSuccess(
+          '¡Membresía activada!',
+          `Fue activada para el usuario ${membresia.nombreMiembro}`
+        )
         this.loadMemberships();
       },
       error: (error) => {
         console.error('Error activating membership:', error);
         this.showActivationModal = false; 
-        Swal.fire({
-          title: 'Error',
-          text: error.error?.message || 'Error al activar la membresía',
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
+        this.customAlertService.showError(
+          'Error al activar membresia',
+          `Error al activar la membresia ${error}`
+        )
       }
     });
   }

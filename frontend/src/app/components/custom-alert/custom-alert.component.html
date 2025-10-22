@@ -1,0 +1,41 @@
+<div *ngIf="alertData" class="custom-alert-overlay">
+  <div class="custom-alert" [class]="'custom-alert--' + alertData.type">
+    
+    <!-- Header con ícono y título -->
+    <div class="custom-alert__header">
+      <div class="custom-alert__icon-container">
+        <i [class]="getAlertIcon()"></i>
+      </div>
+      <div class="custom-alert__title-content">
+        <h3 class="custom-alert__title">{{ alertData.title }}</h3>
+        <p class="custom-alert__subtitle" *ngIf="alertData.type !== 'confirm'">{{ getAlertSubtitle() }}</p>
+      </div>
+      <button *ngIf="alertData.type !== 'confirm'" 
+              class="custom-alert__close" 
+              (click)="close()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Mensaje principal -->
+    <div class="custom-alert__body">
+      <p>{{ alertData.message }}</p>
+    </div>
+
+    <!-- Footer para confirmaciones -->
+    <div *ngIf="alertData.type === 'confirm'" class="custom-alert__footer">
+      <button class="btn btn--secondary" (click)="onCancel()">
+        <span>{{ alertData.cancelText || 'Cancelar' }}</span>
+      </button>
+      <button class="btn btn--primary" (click)="onConfirm()">
+        <span>{{ alertData.confirmText || 'Aceptar' }}</span>
+      </button>
+    </div>
+
+    <!-- Barra de progreso para alertas automáticas -->
+    <div *ngIf="alertData.duration && alertData.duration > 0 && alertData.type !== 'confirm'" 
+         class="custom-alert__progress">
+      <div class="custom-alert__progress-bar"></div>
+    </div>
+  </div>
+</div>

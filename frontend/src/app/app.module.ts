@@ -48,9 +48,11 @@ import { MiembroService } from './services/miembro.service';
 import { MembresiaService } from './services/membresia.service';
 import { NotificacionService } from './services/notificacion.service';
 import { DashboardService } from './services/dashboard.service';
+import { CustomAlertService } from './services/custom-alert.service';
 
 // Ng2Charts
 import { NgChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -94,6 +96,7 @@ import { NgChartsModule } from 'ng2-charts';
     MembresiaService,
     NotificacionService,
     DashboardService,
+    CustomAlertService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

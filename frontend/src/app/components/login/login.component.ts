@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import Swal from 'sweetalert2';
+import { CustomAlertService } from '../../services/custom-alert.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private customAlertService: CustomAlertService
   ) {}
 
   ngOnInit(): void {
@@ -32,7 +33,6 @@ export class LoginComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
-
     // Obtener la URL de retorno si existe
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
   }
@@ -44,23 +44,18 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           this.loading = false;
-          Swal.fire({
-            icon: 'success',
-            title: '¡Bienvenido!',
-            text: `Hola ${response.nombreCompleto}`,
-            timer: 2000,
-            showConfirmButton: false
-          });
+          this.customAlertService.showSuccess(
+            '¡Bienvenido!',
+            `Hola, ${response.nombreCompleto}`
+          );
           this.router.navigate([this.returnUrl]);
         },
         error: (error) => {
           this.loading = false;
-          Swal.fire({
-            icon: 'error',
-            title: 'Error de autenticación',
-            text: 'Usuario o contraseña incorrectos',
-            confirmButtonText: 'Intentar de nuevo'
-          });
+          this.customAlertService.showError(
+            'Error de autenticación',
+            'Usuario o contraseña incorrectos'
+          );
         }
       });
     }
