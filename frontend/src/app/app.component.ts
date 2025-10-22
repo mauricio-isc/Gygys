@@ -4,13 +4,14 @@ import { Router, RouterModule } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
+import { CustomAlertComponent } from "./components/custom-alert/custom-alert.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [NavbarComponent, SidebarComponent, RouterModule, CommonModule],
+  imports: [NavbarComponent, SidebarComponent, RouterModule, CommonModule, CustomAlertComponent],
 })
 export class AppComponent implements OnInit {
   sidebarCollapsed = false;

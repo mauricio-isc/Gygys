@@ -10,6 +10,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { MemberFormComponent } from './components/members/members-form.component';
 import { PagosMiembroComponent } from './components/pagos/Pagos-miembro.component';
 import { TipoMembresiaComponentTs } from './components/tipo-membresia/tipo-membresia.component.ts';
+import { CustomAlertComponent } from './components/custom-alert/custom-alert.component';
 
 export const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -22,6 +23,7 @@ export const appRoutes: Routes = [
   { path: 'members/:id', component: MemberFormComponent, canActivate: [AuthGuard] },
   { path: 'pagos/miembro/:id', component: PagosMiembroComponent, canActivate: [AuthGuard] },
   { path: 'tipos-membresia', component: TipoMembresiaComponentTs},
+  {path: 'custom-alert', component: CustomAlertComponent},
   { path: '**', redirectTo: '/dashboard' },
 ];
 

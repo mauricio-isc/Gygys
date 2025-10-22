@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MiembroService } from '../../services/miembro.service';
 import { Miembro } from '../../models/miembro.model';
-import Swal from 'sweetalert2';
+import { CustomAlertService } from '../../services/custom-alert.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -28,8 +28,12 @@ export class MembersComponent implements OnInit {
   currentPage = 0;
   pageSize = 10;
   totalElements = 0;
+  deletingMembers: Set<number> = new Set();
 
-  constructor(private miembroService: MiembroService) {}
+  constructor(
+    private miembroService: MiembroService, 
+    private customAlertService: CustomAlertService
+  ) {}
 
   ngOnInit(): void {
     this.loadMembers();
@@ -48,7 +52,6 @@ export class MembersComponent implements OnInit {
   }
 
   searchMembers(): void {
-
     this.currentPage = 0;
 
     if (this.searchTerm.trim()) {
@@ -76,24 +79,49 @@ export class MembersComponent implements OnInit {
   }
 
   deleteMember(member: Miembro): void {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: `¿Deseas eliminar al miembro ${member.nombreCompleto}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
+    this.customAlertService.showConfirm(
+      'Eliminar Miembro',
+      `¿Estás seguro de que deseas eliminar al miembro ${member.nombreCompleto}? Esta acción no se puede deshacer.`,
+      'Sí, eliminar',
+      'Cancelar'
+    ).subscribe((confirmed) => {
+      if(confirmed) {
+        this.deletingMembers.add(member.id);
+        
         this.miembroService.delete(member.id).subscribe({
           next: () => {
-            Swal.fire('Eliminado', 'El miembro ha sido eliminado correctamente', 'success');
+            this.deletingMembers.delete(member.id);
+            
+            this.customAlertService.showSuccess(
+              'Eliminado',
+              `El miembro ${member.nombreCompleto} ha sido eliminado correctamente.`
+            );
             this.loadMembers();
           },
-          error: () => Swal.fire('Error', 'No se pudo eliminar el miembro', 'error')
+          error: (error) => {
+            this.deletingMembers.delete(member.id);
+            
+            console.error('Error al eliminar:', error);
+            
+            let errorMessage = 'No se pudo eliminar el miembro. Intente de nuevo.';
+            
+            if (error.status === 404) {
+              errorMessage = 'El miembro no fue encontrado.';
+            } else if (error.status === 409) {
+              errorMessage = 'No se puede eliminar el miembro porque tiene registros asociados.';
+            } else if (error.status >= 500) {
+              errorMessage = 'Error del servidor. Por favor, intente más tarde.';
+            }
+            
+            this.customAlertService.showError('Error', errorMessage);
+          }
         });
       }
     });
+  }
+
+  isDeleting(memberId: number): boolean {
+    return this.deletingMembers.has(memberId);
   }
 
   get pages(): number[] {

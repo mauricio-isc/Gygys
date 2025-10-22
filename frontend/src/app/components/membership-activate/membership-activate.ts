@@ -116,7 +116,6 @@ export class MembershipActivationComponent implements OnInit {
     });
   }
 
-  // Métodos de búsqueda
   onSearchChange(term: string): void {
     this.searchTerm = term;
     if (term.length < 2) {

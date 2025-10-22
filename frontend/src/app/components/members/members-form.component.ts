@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Miembro } from '../../models/miembro.model';
 import { MiembroService } from '../../services/miembro.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import Swal from 'sweetalert2';
+import { CustomAlertService } from '../../services/custom-alert.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -22,7 +22,8 @@ export class MemberFormComponent implements OnInit {
   constructor(
     private miembroService: MiembroService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private customAlertService: CustomAlertService
   ) {}
 
   ngOnInit(): void {
@@ -42,15 +43,21 @@ export class MemberFormComponent implements OnInit {
   saveMember(): void {
     if (this.selectedMember.id) {
       this.miembroService.update(this.selectedMember.id, this.selectedMember).subscribe({
-        next: () => {
-          Swal.fire('Éxito', 'Miembro actualizado', 'success');
+        next: (response) => {
+          this.customAlertService.showSuccess(
+            '¡Miembro actualizado!',
+            `Se actualizo ${response.nombre}`
+          );
           this.router.navigate(['/members']);
         }
       });
     } else {
       this.miembroService.create(this.selectedMember).subscribe({
         next: () => {
-          Swal.fire('Éxito', 'Miembro creado', 'success');
+          this.customAlertService.showSuccess(
+            '¡Miembro creado!',
+            `Bienvenido al gimnacio`
+          );
           this.router.navigate(['/members']);
         }
       });
