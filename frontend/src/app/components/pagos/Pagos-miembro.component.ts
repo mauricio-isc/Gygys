@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule, DatePipe, DecimalPipe, NgIf, NgFor, NgClass } from '@angular/common';
 import { PagoService, PagoDetalle } from '../../services/pago.service';
 import { Location } from '@angular/common';
+import { CustomAlertService } from '../../services/custom-alert.service';
 
 @Component({
   selector: 'app-pagos-miembro',
@@ -27,7 +28,8 @@ export class PagosMiembroComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private pagoService: PagoService,
-    private location: Location
+    private location: Location,
+    private customAlertService: CustomAlertService
   ) {}
 
   ngOnInit(): void {
@@ -35,16 +37,20 @@ export class PagosMiembroComponent implements OnInit {
     this.cargarPagos();
   }
 
+  //usar desesctructuracion, operador opcional para asi evitar condicionales innecesarias y usando optional chaining
   cargarPagos(): void {
     this.pagoService.getPagosPorMiembro(this.miembroId).subscribe({
-      next: (pagos) => {
+      next:(pagos)=>{
         this.pagos = pagos;
-        if (pagos.length > 0) {
-          this.nombreMiembro = pagos[0].nombreMiembro;
-        }
+        //se usa optional chaining para asignar el nombre si existe el primer pago
+        this.nombreMiembro = pagos[0]?.nombreMiembro||'';
       },
-      error: (error) => {
-        console.error('Error cargando pagos:', error);
+      error: (error) =>{
+        console.error('Error cargando pagos:',error);
+        this.customAlertService.showError(
+          'Error',
+          'No se pudieron cargar los pagos. Por favor intenta más tarde'
+        )
       }
     });
   }

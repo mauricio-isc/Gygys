@@ -38,37 +38,31 @@ export class NotificationsComponent implements OnInit {
 
   loadNotifications(): void {
     this.loading = true;
-    
-    let serviceCall;
-    switch (this.filter) {
-      case 'unread':
-        serviceCall = this.notificacionService.findUnread();
-        break;
-      case 'read':
-        serviceCall = this.notificacionService.findAll();
-        break;
-      default:
-        serviceCall = this.notificacionService.findAll();
+   
+    const serviceMap ={
+      unread: () => this.notificacionService.findUnread(),
+      read: () => this.notificacionService.findAll(),
+      all:() => this.notificacionService.findAll()
     }
 
-    serviceCall.subscribe({
-      next: (notifications) => {
-        if (this.filter === 'read') {
-          this.notifications = notifications.filter(n => n.leida);
-        } else {
-          this.notifications = notifications;
-        }
-        this.loading = false;
-        
-        this.unreadCount = this.notifications.filter(n => !n.leida).length;
-      },
-      error: (error) => {
-        console.error('Error loading notifications:', error);
-        this.loading = false;
-        this.customAlertService.showError('Error', 'No se pudieron cargar las notificaciones');
-      }
-    });
-  }
+    const serviceCall = serviceMap[this.filter]();
+
+  serviceCall.subscribe({
+    next: (notifications) => {
+      this.notifications = this.filter === 'read'
+        ? notifications.filter(n => n.leida)
+        : notifications;
+
+      this.unreadCount = this.notifications.filter(n => !n.leida).length;
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Error loading notifications:', error);
+      this.loading = false;
+      this.customAlertService.showError('Error', 'No se pudieron cargar las notificaciones');
+    },
+  });
+}
 
   markAsRead(notification: Notificacion): void {
     if (!notification.leida) {
@@ -118,37 +112,29 @@ markAllAsRead(): void {
 }
 
   getNotificationIcon(type: string): string {
-    switch (type) {
-      case 'VENCIMIENTO_MEMBRESIA':
-        return 'fas fa-exclamation-triangle text-warning';
-      case 'PAGO_PENDIENTE':
-        return 'fas fa-dollar-sign text-info';
-      case 'BIENVENIDA':
-        return 'fas fa-hand-wave text-success';
-      default:
-        return 'fas fa-bell text-secondary';
-    }
+
+    const iconMap: Record<string, string> ={
+      VENCIMIENTO_MEMBRESIA: 'fas fa-exclamation-triangle text-warning',
+      PAGO_PENDIENTE: 'fas fa-dollar-sign text-info',
+      BIENVENIDA: 'fas fa-hand-wave text-success',
+    };
+    return iconMap[type]  || 'fas fa-bell text-secondary'
+
   }
 
   getRelativeTime(date: Date): string {
     const now = new Date();
     const notificationDate = new Date(date);
-    const diffTime = Math.abs(now.getTime() - notificationDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.ceil(Math.abs(+now - +notificationDate) / 100 * 60 * 60 * 24);
 
-    if (diffDays === 0) {
-      return 'Hoy';
-    } else if (diffDays === 1) {
-      return 'Ayer';
-    } else if (diffDays < 7) {
-      return `Hace ${diffDays} días`;
-    } else if (diffDays < 30) {
-      const weeks = Math.floor(diffDays / 7);
-      return `Hace ${weeks} semana${weeks > 1 ? 's' : ''}`;
-    } else {
-      const months = Math.floor(diffDays / 30);
-      return `Hace ${months} mes${months > 1 ? 'es' : ''}`;
-    }
+    const rules =[
+      {condition: diffDays === 0, message: 'Hoy' },
+      {condition: diffDays === 1, message: 'Ayer'},
+      {condition: diffDays < 7, message: `Hace ${diffDays} días`},
+      {condition: diffDays < 30, message: `Hace ${Math.floor(diffDays / 7)} semana${Math.floor(diffDays / 7) > 1 ? 's': ''}`},
+      {condition: diffDays < 30, message: `Hace ${Math.floor(diffDays / 30)} mes${Math.floor(diffDays / 30) > 1 ? 'es': ''}`}
+    ];
+    return rules.find(r=> r.condition)?.message || `Hace ${Math.floor(diffDays / 365)} año${Math.floor(diffDays / 365) > 1 ? 's' : ''}`;
   }
 
   onFilterChange(): void {

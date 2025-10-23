@@ -35,39 +35,28 @@ export class CustomAlertComponent implements OnDestroy {
 
     getAlertIcon(): string {
       if (!this.alertData) return '';
-      
-      switch (this.alertData.type) {
-        case 'error':
-          return 'fas fa-exclamation-circle';
-        case 'success':
-          return 'fas fa-check-circle';
-        case 'warning':
-          return 'fas fa-exclamation-triangle';
-        case 'info':
-          return 'fas fa-info-circle';
-        case 'confirm':
-          return 'fas fa-question-circle';
-        default:
-          return 'fas fa-bell';
-      }
+      const iconMap: Record<string, string> = {
+        error: 'fas fa-exclamation-circle',
+        success: 'fas fa-check-circle',
+        warning: 'fas fa-exclamation-triangle',
+        info: 'fas fa-info-circle',
+        confirm: 'fas fa-question-circle'
+      };
+      return iconMap[this.alertData.type] || 'fas fa-bell'
     }
 
     getAlertSubtitle(): string {
       if (!this.alertData) return '';
-      
-      switch (this.alertData.type) {
-        case 'error':
-          return 'Error del sistema';
-        case 'success':
-          return 'Operación exitosa';
-        case 'warning':
-          return 'Advertencia importante';
-        case 'info':
-          return 'Información del sistema';
-        default:
-          return 'Notificación';
+        const iconMap: Record<string, string> ={
+            error: 'Error del sistema',
+            success: 'Operación exitosa',
+            warning: 'Advertencia importante',
+            info: 'Información del sistema',
+        }
+
+        return iconMap[this.alertData.type] || 'Notificación'
       }
-    }
+    
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
