@@ -35,21 +35,6 @@ export class CustomAlertComponent implements OnDestroy {
 
     getAlertIcon(): string {
       if (!this.alertData) return '';
-      //Simplificar este fragmento de codigo para que sea mas mantenible y escalable
-      // switch (this.alertData.type) {
-      //   case 'error':
-      //     return 'fas fa-exclamation-circle';
-      //   case 'success':
-      //     return 'fas fa-check-circle';
-      //   case 'warning':
-      //     return 'fas fa-exclamation-triangle';
-      //   case 'info':
-      //     return 'fas fa-info-circle';
-      //   case 'confirm':
-      //     return 'fas fa-question-circle';
-      //   default:
-      //     return 'fas fa-bell';
-      // }
       const iconMap: Record<string, string> = {
         error: 'fas fa-exclamation-circle',
         success: 'fas fa-check-circle',

@@ -118,19 +118,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     
     this.markAsRead(notification, event);
     
-    // Navegación basada en el tipo de notificación
-    switch (notification.tipoNotificacion) {
-      case 'VENCIMIENTO_MEMBRESIA':
-        this.router.navigate(['/memberships']);
-        break;
-      case 'PAGO_PENDIENTE':
-        this.router.navigate(['/payments']);
-        break;
-      case 'BIENVENIDA':
-      case 'GENERAL':
-      default:
-        this.router.navigate(['/members', notification.miembroId]);
-        break;
+    const routeMap: Record<string, () => void> ={
+      VENCIMIENTO_MEMBRESIA: () => this.router.navigate(['/memberships']),
+      PAGO_PENDIENTE: () => this.router.navigate(['/payments']),
+      BIENVENIDA: () => this.router.navigate(['members', notification.miembroId]),
+      GENERAL: () => this.router.navigate(['members', notification.miembroId])
     }
   }
 
@@ -140,7 +132,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
-  // Obtener icono según el tipo de notificación REAL
+  // Obtener icono segun el tipo de notificacion REAL
   getNotificationIcon(tipoNotificacion: string): string {
     const iconMap: { [key: string]: string } = {
       'VENCIMIENTO_MEMBRESIA': 'fas fa-calendar-exclamation text-warning',
@@ -152,7 +144,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return iconMap[tipoNotificacion] || 'fas fa-bell text-primary';
   }
 
-  // Obtener clase de color según el tipo
+  // Obtener clase de color segun el tipo
   getNotificationBadgeClass(tipoNotificacion: string): string {
     const badgeMap: { [key: string]: string } = {
       'VENCIMIENTO_MEMBRESIA': 'bg-warning',
@@ -164,7 +156,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return badgeMap[tipoNotificacion] || 'bg-primary';
   }
 
-  // Formatear fecha de notificación
+  // Formatear fecha de notificacion
   formatNotificationDate(fechaEnvio: Date): string {
     const date = new Date(fechaEnvio);
     const now = new Date();

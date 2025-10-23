@@ -55,44 +55,61 @@ public class TipoMembresia {
     @Builder.Default
     private List<Membresia> membresias = new ArrayList<>();
 
+    private static final int DIAS_POR_MES = 30;
+    private static final int DIAS_POR_ANIO = 365;
+
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         fechaCreacion = LocalDateTime.now();
     }
 
     //metodos de utilidad
+    //refactorizar ***
     public String getDuracionFormateada() {
-        if (duracionDias == null) {
-            return "";
-        }
+        if(duracionDias == null)return null;
 
-        if (duracionDias < 30) {
-            return duracionDias + " días";
-        } else if (duracionDias < 365) {
-            int meses = duracionDias / 30;
-            int diasRestantes = duracionDias % 30;
-            if (diasRestantes == 0) {
-                return meses + " mes" + (meses > 1 ? "es" : "");
-            } else {
-                return meses + " mes" + (meses > 1 ? "es" : "") + " y " + diasRestantes + " día" + (diasRestantes > 1 ? "s" : "");
-            }
-        } else {
-            int años = duracionDias / 365;
-            int diasRestantes = duracionDias % 365;
-            if (diasRestantes == 0) {
-                return años + " año" + (años > 1 ? "s" : "");
-            } else {
-                int meses = diasRestantes / 30;
-                int diasFinales = diasRestantes % 30;
-                String resultado = años + " año" + (años > 1 ? "s" : "");
-                if (meses > 0) {
-                    resultado += " y " + meses + " mes" + (meses > 1 ? "es" : "");
-                }
-                if (diasFinales > 0) {
-                    resultado += " y " + diasFinales + " día" + (diasFinales > 1 ? "s" : "");
-                }
-                return resultado;
-            }
+        if (duracionDias < DIAS_POR_MES){
+            return formatearDias(duracionDias);
+        } else if (duracionDias < DIAS_POR_ANIO) {
+            return formatearMeses(duracionDias);
+        }else {
+            return formatearAnios(duracionDias);
         }
     }
+
+    private String formatearDias(int dias){
+        return dias + " día" + (dias > 1 ? "s" : "");
+    }
+
+    private String formatearMeses(int dias){
+        int meses = dias / DIAS_POR_MES;
+        int diasRestantes = dias % DIAS_POR_MES;
+
+        if (diasRestantes == 0){
+            return meses + " mes" + (meses > 1 ? "es" : "");
+        }else{
+            return meses + " mes" + (meses > 1 ? "es" : "") + " y " + formatearDias(diasRestantes);
+        }
+    }
+
+    private  String formatearAnios(int dias){
+        int anios = dias / DIAS_POR_ANIO;
+        int diasRestantes = dias % DIAS_POR_ANIO;
+
+        StringBuilder resultado = new StringBuilder();
+        resultado.append(anios).append(" año").append(anios > 1 ? "s": "");
+
+        if (diasRestantes > 0){
+            int diasFinales = diasRestantes % DIAS_POR_MES;
+            int meses = diasRestantes / DIAS_POR_MES;
+            if (meses > 0 ){
+                resultado.append(" y ").append(meses).append(" mes").append(meses > 1 ? "es" : "");
+            }
+            if (diasFinales > 0){
+                resultado.append(" y ").append(formatearDias(diasFinales));
+            }
+        }
+        return resultado.toString();
+    }
+
 }
