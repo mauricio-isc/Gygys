@@ -13,7 +13,7 @@
     </parent>
 
     <groupId>com.gym</groupId>
-    <artifactId>gym-management</artifactId>
+    <artifactId>backend</artifactId>
     <version>1.0.0</version>
     <name>Gym Management System</name>
     <description>Sistema de gestión de gimnasio con Spring Boot</description>
