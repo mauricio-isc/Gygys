@@ -123,18 +123,39 @@ markAllAsRead(): void {
   }
 
   getRelativeTime(date: Date): string {
-    const now = new Date();
-    const notificationDate = new Date(date);
-    const diffDays = Math.ceil(Math.abs(+now - +notificationDate) / 100 * 60 * 60 * 24);
+    try{
+      if(!date) return 'Fecha no disponible';
 
-    const rules =[
-      {condition: diffDays === 0, message: 'Hoy' },
-      {condition: diffDays === 1, message: 'Ayer'},
-      {condition: diffDays < 7, message: `Hace ${diffDays} días`},
-      {condition: diffDays < 30, message: `Hace ${Math.floor(diffDays / 7)} semana${Math.floor(diffDays / 7) > 1 ? 's': ''}`},
-      {condition: diffDays < 30, message: `Hace ${Math.floor(diffDays / 30)} mes${Math.floor(diffDays / 30) > 1 ? 'es': ''}`}
-    ];
-    return rules.find(r=> r.condition)?.message || `Hace ${Math.floor(diffDays / 365)} año${Math.floor(diffDays / 365) > 1 ? 's' : ''}`;
+      const notificationDate = new Date(date);
+      if(isNaN(notificationDate.getTime())){
+        return 'Fecha inválida';
+      }
+
+      const now = new Date();
+      const diffMs = now.getTime() - notificationDate.getTime();
+
+      if(diffMs < 0){
+        return 'En el futuro';
+      }
+
+      const diffSeconds = Math.floor(diffMs / 1000);
+      const diffMinutes = Math.floor(diffSeconds / 60);
+      const diffHours = Math.floor(diffMinutes / 60);
+      const diffDays = Math.floor(diffHours / 24);
+
+      if(diffSeconds < 60) return 'Hace unos segundos';
+      if(diffMinutes < 60) return `Hace ${diffMinutes} minuto${diffMinutes > 1 ? 's' : ''}`;
+      if(diffHours < 24) return `Hace ${diffHours} hora${diffHours > 1 ? 's' : ''}`;
+      if(diffDays === 1) return `Ayer`;
+      if(diffDays < 7) return `Hace ${diffDays} días`;
+      if(diffDays < 30) return `Hace ${Math.ceil(diffDays / 7)} semana${Math.ceil(diffDays / 7) > 1 ? 's' : ''}`;
+      if(diffDays < 365) return `Hace ${Math.floor(diffDays / 30)} mes${Math.floor(diffDays / 30) > 1 ? 'es' : ''} `;
+
+      return `Hace ${Math.floor(diffDays / 365)} año${Math.floor(diffDays / 365) > 1 ? 's' : ''}`
+    }catch(error){
+      console.error('Error en getRelativeTime: ', error)
+      return 'Error en la fecha';
+    }
   }
 
   onFilterChange(): void {
