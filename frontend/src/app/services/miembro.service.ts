@@ -8,8 +8,8 @@ export interface Page<T> {
   content: T[];
   totalElements: number;
   totalPages: number;
-  number: number; // pagina actual
-  size: number;   // tamaño de pagina
+  number: number; 
+  size: number;   
 }
 
 @Injectable({
