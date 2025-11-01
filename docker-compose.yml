@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-gym
+    environment:
+      MYSQL_ROOT_PASSWORD: developer
+      MYSQL_DATABASE: gym_management
+      MYSQL_PASSWORD: developer
+    ports:
+      - "3309:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - gym-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  backend:
+    build: ./backend
+    container_name: springboot-gym
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gym_management?useSSL=false&serverTimeZone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: developer
+      JWT_SECRET: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+    depends_on:
+      - mysql
+    networks:
+      - gym-network
+    volumes:
+      - ./backend/logs:/app/logs
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: angular-gym
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - gym-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  gym-network:
+    driver: bridge

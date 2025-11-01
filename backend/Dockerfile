@@ -4,7 +4,7 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 #Instalar dependencias necesarias y crear directorio de logs
-RUN apt-get update && apt-get install -y --no--install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     && mkdir -p /app/logs \
     && rm -rf /var/lib/apt/lists/*
 

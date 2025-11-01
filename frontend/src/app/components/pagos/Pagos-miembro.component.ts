@@ -17,8 +17,8 @@ import { CustomAlertService } from '../../services/custom-alert.service';
     DatePipe,     
     DecimalPipe     
   ],
-  templateUrl: './pagos-miembro.component.html',
-  styleUrls: ['./pagos-miembro.component.scss']
+  templateUrl: './Pagos-miembro.component.html',
+  styleUrls: ['./Pagos-miembro.component.scss']
 })
 export class PagosMiembroComponent implements OnInit {
   pagos: PagoDetalle[] = [];
